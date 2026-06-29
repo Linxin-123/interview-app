@@ -3,457 +3,364 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Interview Studio — 3D Examiner</title>
+<title>Interview Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0e0a1f; --bg2:#160f2e; --panel:#1d1540; --panel2:#241a4d;
-    --line:#332359; --accent:#8b6cff; --accent-soft:#a991ff; --lychee:#ff7eb6;
-    --text:#ece8fb; --muted:#9d92c7; --good:#5fe3a1; --radius:18px;
+    --bg1:#1b1535; --bg2:#241a44; --rose:#ff9ecb; --lav:#b9a4ff; --vio:#8b6cff;
+    --ink:#f3eefe; --muted:#b3a8d6; --line:rgba(185,164,255,.18);
+    --glass:rgba(45,33,82,.55); --good:#7fe6b0; --radius:22px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
-  body{font-family:'Inter',system-ui,sans-serif;color:var(--text);
-    background:radial-gradient(1200px 800px at 70% -10%, #241a4d 0%, var(--bg) 55%), var(--bg);
-    min-height:100%;display:flex;flex-direction:column;align-items:center;padding:24px 16px 60px;}
-  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.01em}
-  .wrap{width:100%;max-width:760px}
-  header.top{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-  .logo{width:34px;height:34px;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, var(--lychee), #c44d86 70%);box-shadow:0 0 18px rgba(255,126,182,.5)}
-  header.top h1{font-size:20px;margin:0;font-weight:600}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);min-height:100%;
+    background:
+      radial-gradient(900px 600px at 12% -8%, rgba(255,158,203,.18), transparent 60%),
+      radial-gradient(1000px 700px at 88% 4%, rgba(139,108,255,.28), transparent 60%),
+      radial-gradient(800px 800px at 50% 110%, rgba(127,230,176,.10), transparent 60%),
+      linear-gradient(160deg, var(--bg1), var(--bg2));
+    display:flex;flex-direction:column;align-items:center;padding:26px 16px 70px;position:relative;overflow-x:hidden}
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:tw 4s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.18}50%{opacity:.8}}
+  .wrap{width:100%;max-width:680px;position:relative;z-index:1}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+  .serif{font-family:'Fraunces',serif;font-style:italic}
+  header.top{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .logo{width:42px;height:42px;border-radius:50%;position:relative;
+    background:radial-gradient(circle at 34% 30%, var(--rose), #d65a96 72%);box-shadow:0 0 26px rgba(255,158,203,.55)}
+  .logo::after{content:"✦";position:absolute;top:-8px;right:-6px;color:var(--lav);font-size:13px}
+  header.top h1{font-size:23px;margin:0;font-weight:600}
   header.top span{color:var(--muted);font-size:13px}
-  .card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);
-    border-radius:var(--radius);padding:24px;box-shadow:0 20px 50px -30px #000}
-  .label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 10px}
+
+  .card{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+    box-shadow:0 30px 70px -40px #000, inset 0 1px 0 rgba(255,255,255,.05)}
+  .seclabel{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-size:13px;
+    letter-spacing:.04em;color:var(--lav);margin:0 0 12px;font-weight:500}
+  .seclabel .n{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;
+    font-size:12px;background:linear-gradient(135deg,var(--vio),var(--rose));color:#1b1535;font-weight:700}
   .grid{display:grid;gap:12px}
-  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-  .grid.cols-4{grid-template-columns:repeat(4,1fr)}
-  @media(max-width:560px){.grid.cols-3,.grid.cols-4{grid-template-columns:1fr 1fr}}
-  .opt{cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:14px;
-    padding:14px 12px;text-align:left;color:var(--text);font-size:14px;font-weight:500;transition:.15s;line-height:1.3}
-  .opt small{display:block;color:var(--muted);font-weight:400;font-size:12px;margin-top:4px}
-  .opt:hover{border-color:var(--accent)}
-  .opt[aria-pressed="true"]{border-color:var(--accent);background:linear-gradient(180deg,#2c2160,#241a4d);
-    box-shadow:0 0 0 1px var(--accent),0 0 22px -6px var(--accent)}
-  .field{margin-top:22px}
-  input[type=password],input[type=text],select{width:100%;background:var(--panel2);border:1px solid var(--line);
-    color:var(--text);border-radius:12px;padding:12px 14px;font-size:14px;font-family:inherit}
-  input:focus,select:focus,.opt:focus-visible,button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:2px}
-  .slider-row{display:flex;align-items:center;gap:14px;margin-top:6px}
-  input[type=range]{flex:1;accent-color:var(--accent)}
-  .pill{font-family:'Space Grotesk';font-size:15px;min-width:118px;color:var(--accent-soft)}
-  .hint{color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:8px}
-  a{color:var(--accent-soft)}
-  button.primary{margin-top:26px;width:100%;border:none;cursor:pointer;
-    background:linear-gradient(90deg,var(--accent),#6d4dff);color:#fff;font-family:'Space Grotesk';
-    font-weight:600;font-size:16px;padding:15px;border-radius:14px;box-shadow:0 12px 30px -10px var(--accent);transition:.15s}
-  button.primary:hover{filter:brightness(1.08)}
-  button.ghost{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:12px;
-    padding:11px 16px;cursor:pointer;font-family:inherit;font-size:14px}
-  button.ghost:hover{border-color:var(--accent)}
+  .cols-3{grid-template-columns:repeat(3,1fr)} .cols-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:540px){.cols-3,.cols-4{grid-template-columns:1fr 1fr}}
+  .opt{cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:16px;
+    padding:14px 12px;text-align:left;color:var(--ink);font-size:14px;font-weight:500;transition:.16s;line-height:1.25}
+  .opt .ic{font-size:20px;display:block;margin-bottom:7px}
+  .opt small{display:block;color:var(--muted);font-weight:400;font-size:11.5px;margin-top:3px}
+  .opt:hover{border-color:var(--lav);transform:translateY(-1px)}
+  .opt[aria-pressed="true"]{border-color:transparent;color:#1b1535;
+    background:linear-gradient(135deg,var(--lav),var(--rose));box-shadow:0 10px 26px -10px var(--rose)}
+  .opt[aria-pressed="true"] small{color:rgba(27,21,53,.7)}
+  .field{margin-top:24px}
+  .slider-row{display:flex;align-items:center;gap:14px}
+  input[type=range]{flex:1;accent-color:var(--rose)}
+  .pill{font-family:'Space Grotesk';font-size:15px;min-width:120px;color:var(--rose)}
+  .hint{color:var(--muted);font-size:12.5px;line-height:1.55;margin-top:9px}
+  a{color:var(--lav)}
+  button.primary{margin-top:28px;width:100%;border:none;cursor:pointer;color:#1b1535;
+    background:linear-gradient(95deg,var(--rose),var(--lav));font-family:'Space Grotesk';font-weight:700;
+    font-size:16px;padding:16px;border-radius:16px;box-shadow:0 16px 36px -14px var(--rose);transition:.16s}
+  button.primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  button.ghost{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);
+    border-radius:13px;padding:11px 16px;cursor:pointer;font-family:inherit;font-size:14px}
+  button.ghost:hover{border-color:var(--lav)}
+  .status{font-size:13px;color:var(--muted);margin-top:10px;min-height:18px}
+  .status.ok{color:var(--good)} .status.err{color:var(--rose)}
 
-  .stage{display:none}
-  #avatarWrap{position:relative;width:100%;height:340px;border-radius:16px;overflow:hidden;
-    background:radial-gradient(120% 90% at 50% 0%, #2a1f57 0%, #150e2c 70%);border:1px solid var(--line)}
+  /* stage */
+  .stage{display:none;text-align:center}
+  #avatarWrap{position:relative;width:100%;height:420px;border-radius:20px;overflow:hidden;
+    background:radial-gradient(130% 95% at 50% 0%, #34255f 0%, #1a1230 72%);border:1px solid var(--line)}
   #avatarCanvas{width:100%;height:100%;display:block}
-  #avatarFallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
-    gap:12px;text-align:center;padding:24px;color:var(--muted)}
-  .fallorb{width:90px;height:90px;border-radius:50%;
-    background:radial-gradient(circle at 38% 32%, var(--accent-soft), #4b2fb0 72%);box-shadow:0 0 40px -8px var(--accent)}
-  .fallorb.speaking{animation:pulse 1.3s ease-out infinite}
-  @keyframes pulse{0%{transform:scale(1);box-shadow:0 0 40px -8px var(--accent)}50%{transform:scale(1.06);box-shadow:0 0 60px -6px var(--accent)}100%{transform:scale(1)}}
-  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin:14px 0 8px}
-  .timer{font-family:'Space Grotesk';color:var(--accent-soft);font-size:15px}
-  .examiner-line{font-size:17px;line-height:1.5;min-height:50px}
-  .status{font-size:13px;color:var(--muted);margin-top:6px;min-height:18px}
-  .status.listening{color:var(--good)} .status.err{color:var(--lychee)}
-  .transcript{margin:14px 0;max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
-  .bubble{padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.45;max-width:88%}
-  .bubble.ex{background:var(--panel2);border:1px solid var(--line);align-self:flex-start}
-  .bubble.me{background:linear-gradient(180deg,#33245f,#2a1f52);align-self:flex-end}
-  .bubble small{display:block;font-size:11px;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.08em}
-  .controls{display:flex;gap:12px;align-items:center}
-  .mic{flex:1;border:none;cursor:pointer;border-radius:14px;padding:15px;font-family:'Space Grotesk';
-    font-weight:600;font-size:15px;color:#fff;background:linear-gradient(90deg,var(--accent),#6d4dff);transition:.15s}
-  .mic.rec{background:linear-gradient(90deg,#ff5f9e,var(--lychee));animation:rec 1.2s infinite}
-  @keyframes rec{50%{filter:brightness(1.2)}}
-  .mic:disabled{opacity:.5;cursor:not-allowed}
+  #avatarFallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--muted);padding:24px;text-align:center}
+  .fallorb{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 38% 32%, var(--lav), #5a3fc0 72%);box-shadow:0 0 46px -6px var(--lav)}
+  .fallorb.speaking{animation:pulse 1.2s ease-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .progress{display:flex;gap:7px;justify-content:center;margin:16px 0 4px}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.16)}
+  .dot.done{background:var(--lav)} .dot.now{background:var(--rose);box-shadow:0 0 10px var(--rose)}
+  .askstate{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--lav);margin:14px 0 4px;min-height:26px}
+  .bigbtn{margin-top:14px;width:100%;border:none;cursor:pointer;border-radius:18px;padding:20px;
+    font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#1b1535;
+    background:linear-gradient(95deg,var(--lav),var(--rose));transition:.15s}
+  .bigbtn.rec{background:linear-gradient(95deg,#ff6f9f,var(--rose));animation:rec 1.1s infinite}
+  @keyframes rec{50%{filter:brightness(1.18)}}
+  .bigbtn:disabled{opacity:.55;cursor:not-allowed;color:rgba(27,21,53,.6)}
+  .subrow{display:flex;gap:10px;justify-content:center;margin-top:14px}
 
+  /* report */
   .report{display:none}
-  .scorerow{display:flex;align-items:center;gap:12px;margin:12px 0}
-  .scorerow .name{width:130px;font-size:13px;color:var(--muted)}
-  .bar{flex:1;height:9px;background:var(--panel2);border-radius:6px;overflow:hidden}
-  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--lychee));border-radius:6px}
-  .scoreval{font-family:'Space Grotesk';color:var(--accent-soft);width:34px;text-align:right}
-  .fb{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:10px;font-size:14px;line-height:1.5}
-  .fb b{color:var(--accent-soft)}
-  ul.tips{margin:8px 0 0;padding-left:18px;line-height:1.6;font-size:14px}
-  #rpmModal{position:fixed;inset:0;background:rgba(8,5,18,.88);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
-  .rpm-inner{position:relative;width:100%;max-width:920px;height:82vh;background:#160f2e;border:1px solid var(--line);border-radius:16px;overflow:hidden}
-  #rpmFrame{width:100%;height:100%;border:0;display:block}
-  #rpmClose{position:absolute;top:12px;right:12px;z-index:2}
+  .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .stat{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+  .stat b{display:block;font-family:'Space Grotesk';font-size:24px;color:var(--rose)}
+  .stat small{color:var(--muted);font-size:11.5px}
+  .fb{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px;font-size:14px;line-height:1.55}
+  .fb b{color:var(--lav)}
+  .qa{border-top:1px dashed var(--line);padding:12px 0;font-size:13.5px;line-height:1.5}
+  .qa .q{color:var(--lav)} .qa .a{color:var(--muted)}
 </style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"></div>
+    <div><h1>Interview Studio</h1><span class="serif">practise out loud, with a face that talks back</span></div>
+  </header>
+
+  <!-- SETUP -->
+  <section id="setup" class="card">
+    <p class="seclabel"><span class="n">1</span> Choose a role</p>
+    <div class="grid cols-3" id="roleGrid"></div>
+
+    <div class="field"><p class="seclabel"><span class="n">2</span> Examiner accent</p>
+      <div class="grid cols-4" id="accentGrid"></div>
+      <select id="voiceSelect" style="width:100%;margin-top:10px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:11px 13px;font-family:inherit;font-size:13.5px"><option>Loading voices…</option></select>
+    </div>
+
+    <div class="field"><p class="seclabel"><span class="n">3</span> Round</p>
+      <div class="grid cols-3" id="roundGrid"></div></div>
+
+    <div class="field"><p class="seclabel"><span class="n">4</span> How long</p>
+      <div class="slider-row"><input type="range" id="mins" min="5" max="45" step="5" value="20"><span class="pill" id="minsLabel">20 min · ~8 Q</span></div></div>
+
+    <div class="field"><p class="seclabel"><span class="n">5</span> Your examiner</p>
+      <div class="grid cols-3" id="faceGrid"></div>
+      <input type="text" id="avatarUrl" placeholder="…or paste your own Ready Player Me .glb link" style="width:100%;margin-top:11px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:11px 13px;font-family:inherit;font-size:13px">
+      <p class="hint">A face loads automatically. If you see a glowing orb instead, tap a different face. Want a custom look? Make one free at <a href="https://readyplayer.me/avatar" target="_blank" rel="noopener">readyplayer.me</a> and paste the <b>.glb</b> link.</p></div>
+
+    <label class="hint" style="display:flex;gap:8px;align-items:center;margin-top:14px">
+      <input type="checkbox" id="intl" style="width:auto;accent-color:var(--rose)"> Add international-candidate questions (visa, moving country)</label>
+
+    <button class="primary" id="startBtn">Begin interview →</button>
+    <p class="status" id="setupStatus"></p>
+  </section>
+
+  <!-- STAGE -->
+  <section id="stage" class="stage card">
+    <div id="avatarWrap">
+      <canvas id="avatarCanvas"></canvas>
+      <div id="avatarFallback"><div class="fallorb" id="fallorb"></div><div id="fallMsg">Examiner</div></div>
+    </div>
+    <div class="progress" id="progress"></div>
+    <div class="askstate serif" id="askState">…</div>
+    <button class="bigbtn" id="bigBtn" disabled>Examiner is asking…</button>
+    <div class="subrow">
+      <button class="ghost" id="repeatBtn">↺ Repeat question</button>
+      <button class="ghost" id="endBtn">Finish &amp; see summary</button>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="report" class="report card">
+    <h2 style="margin:0">Your practice summary</h2>
+    <p class="hint" id="reportRole" style="margin-top:4px"></p>
+    <div class="statgrid" id="statgrid"></div>
+    <div id="tips"></div>
+    <h3 style="margin:22px 0 4px">What you said</h3>
+    <div id="qaList"></div>
+    <button class="primary" id="againBtn">Practise again</button>
+  </section>
+</div>
+
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 }}
 </script>
-</head>
-<body>
-<div class="wrap">
-  <header class="top">
-    <div class="logo"></div>
-    <div>
-      <h1>Interview Studio</h1>
-      <span>Your 3D examiner — voice in, instant report out</span>
-    </div>
-  </header>
-
-  <!-- ===== SETUP ===== -->
-  <section id="setup" class="card">
-    <p class="label">1 · Role</p>
-    <div class="grid cols-3" id="roleGrid"></div>
-
-    <p class="label" style="margin-top:24px">2 · Examiner accent</p>
-    <div class="grid cols-4" id="accentGrid"></div>
-    <div class="field"><select id="voiceSelect"><option>Loading voices…</option></select>
-      <p class="hint">Accents come from your browser's free voices. On Chrome, pick a voice with "Natural" in the name for the smoothest sound.</p></div>
-
-    <p class="label" style="margin-top:24px">3 · Round</p>
-    <div class="grid cols-3" id="roundGrid"></div>
-
-    <div class="field"><p class="label">4 · Length</p>
-      <div class="slider-row"><input type="range" id="mins" min="5" max="45" step="5" value="20"><span class="pill" id="minsLabel">20 min · ~8 Q</span></div></div>
-
-    <div class="field"><p class="label">5 · Your examiner's face (free)</p>
-      <div class="grid cols-3" id="faceGrid">
-        <button class="opt" type="button" data-url="https://readyplayerme.github.io/visage/male.glb">Western male<small>tap to use</small></button>
-        <button class="opt" type="button" data-url="https://readyplayerme.github.io/visage/female.glb">Female<small>tap to use</small></button>
-        <button class="opt" type="button" data-url="https://models.readyplayer.me/6185a4acfb622cf1cdc49348.glb">Male (alt)<small>tap to use</small></button>
-      </div>
-      <input type="text" id="avatarUrl" placeholder="…or paste your own .glb link" style="margin-top:12px">
-      <p class="hint">Tap a face to use it. If one shows a glowing ball instead of a face, just tap another. Want a custom handsome examiner? Make one free at <a href="https://readyplayer.me/avatar" target="_blank" rel="noopener">readyplayer.me</a> (new tab), copy your <b>.glb</b> link, and paste it above.</p></div>
-
-    <div class="field"><p class="label">6 · Free Gemini API key</p>
-      <input type="password" id="apiKey" placeholder="Paste your key (AQ.… or AIza…)">
-      <p class="hint">Saved only in this browser. Get one at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.</p></div>
-
-    <label class="hint" style="display:flex;gap:8px;align-items:center;margin-top:10px">
-      <input type="checkbox" id="intl" style="width:auto;accent-color:var(--accent)"> Add international-candidate questions (visa, adapting to a new country)</label>
-    <label class="hint" style="display:flex;gap:8px;align-items:center;margin-top:8px">
-      <input type="checkbox" id="handsfree" checked style="width:auto;accent-color:var(--accent)"> Hands-free mode (just speak — it detects when you finish)</label>
-
-    <button class="primary" id="startBtn">Start interview</button>
-    <p class="status" id="setupStatus"></p>
-  </section>
-
-  <!-- ===== INTERVIEW ===== -->
-  <section id="stage" class="stage card">
-    <div id="avatarWrap">
-      <canvas id="avatarCanvas"></canvas>
-      <div id="avatarFallback"><div class="fallorb" id="fallorb"></div><div id="fallMsg">Examiner ready</div></div>
-    </div>
-    <div class="meta"><span id="roundName">Round</span><span class="timer" id="timer">00:00 / 20:00</span></div>
-    <div class="examiner-line" id="examinerLine">…</div>
-    <div class="transcript" id="transcript"></div>
-    <div class="controls"><button class="mic" id="micBtn" disabled>Examiner is speaking…</button></div>
-    <p class="status" id="liveStatus"></p>
-    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
-      <button class="ghost" id="repeatBtn">Repeat question</button>
-      <button class="ghost" id="endBtn">End &amp; get report</button>
-    </div>
-  </section>
-
-  <!-- ===== REPORT ===== -->
-  <section id="report" class="report card">
-    <h2 style="margin:0 0 4px">Your feedback report</h2>
-    <p class="hint" id="reportRole" style="margin-top:0"></p>
-    <div id="scores"></div><div id="written"></div>
-    <button class="primary" id="againBtn">Practise another interview</button>
-  </section>
-</div>
-
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-/* ============ avatar controller ============ */
-const Avatar = (() => {
-  let renderer, scene, camera, root, clock;
-  let morphMeshes=[], mouthName=null, blinkNames=[];
-  let targets={}, current={}, talking=false, ready=false;
-  let nextBlink=2, mouthTimer=0;
+/* ---------- starfield ---------- */
+(function(){const s=document.getElementById("stars");for(let i=0;i<34;i++){const d=document.createElement("div");d.className="star";d.style.left=Math.random()*100+"%";d.style.top=Math.random()*100+"%";d.style.animationDelay=(Math.random()*4)+"s";d.style.opacity=.2+Math.random()*.5;s.appendChild(d);}})();
 
+/* ---------- avatar ---------- */
+const Avatar=(()=>{
+  let renderer,scene,camera,root,clock,morphMeshes=[],mouthName=null,blinkNames=[];
+  let targets={},current={},talking=false,nextBlink=2,mouthTimer=0,inited=false;
   function init(canvas){
+    if(inited)return; inited=true;
     renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-    renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-    renderer.outputColorSpace=THREE.SRGBColorSpace;
-    scene=new THREE.Scene();
-    camera=new THREE.PerspectiveCamera(22,1,0.1,100);
-    camera.position.set(0,1.55,0.95); camera.lookAt(0,1.5,0);
-    scene.add(new THREE.HemisphereLight(0xffffff,0x4b2fb0,1.5));
-    const d=new THREE.DirectionalLight(0xffffff,2.2); d.position.set(1,3,2); scene.add(d);
-    const rim=new THREE.DirectionalLight(0xa991ff,1.4); rim.position.set(-2,2,-1); scene.add(rim);
-    clock=new THREE.Clock();
-    resize();
-    window.addEventListener('resize',resize);
-    renderer.setAnimationLoop(update);
+    renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
+    scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(24,1,0.1,100);
+    scene.add(new THREE.HemisphereLight(0xffffff,0x4b2fb0,1.7));
+    const d=new THREE.DirectionalLight(0xffffff,2.3);d.position.set(1,3,2);scene.add(d);
+    const rim=new THREE.DirectionalLight(0xff9ecb,1.5);rim.position.set(-2,2,-1);scene.add(rim);
+    clock=new THREE.Clock();resize();window.addEventListener('resize',resize);renderer.setAnimationLoop(update);
   }
-  function resize(){
-    const w=renderer.domElement.clientWidth||600, h=renderer.domElement.clientHeight||340;
-    renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
-  }
-  function load(url){
+  function resize(){const w=renderer.domElement.clientWidth||600,h=renderer.domElement.clientHeight||420;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  function loadOne(url){
     return new Promise((resolve,reject)=>{
-      let u=url.trim();
-      if(!/\.glb($|\?)/i.test(u)) u=u.replace(/\/?$/,'')+'.glb';
+      let u=url.trim();if(!/\.glb($|\?)/i.test(u))u=u.replace(/\/?$/,'')+'.glb';
       u+=(u.includes('?')?'&':'?')+'morphTargets='+encodeURIComponent('ARKit,Oculus Visemes');
       new GLTFLoader().load(u,gltf=>{
-        if(root) scene.remove(root);
-        root=gltf.scene; scene.add(root);
-        morphMeshes=[]; 
-        root.traverse(o=>{ if(o.isMesh && o.morphTargetDictionary){ morphMeshes.push(o); o.frustumCulled=false; } });
+        if(root)scene.remove(root);root=gltf.scene;scene.add(root);
+        morphMeshes=[];root.traverse(o=>{if(o.isMesh&&o.morphTargetDictionary){morphMeshes.push(o);o.frustumCulled=false;}});
         const dict=morphMeshes.reduce((a,m)=>Object.assign(a,m.morphTargetDictionary),{});
         mouthName=['jawOpen','mouthOpen','viseme_aa'].find(n=>n in dict)||null;
         blinkNames=['eyeBlinkLeft','eyeBlinkRight'].filter(n=>n in dict);
-        if(!blinkNames.length && 'eyesClosed' in dict) blinkNames=['eyesClosed'];
-        // frame the head
-        let head=root.getObjectByName('Head');
-        const tgt=new THREE.Vector3();
-        if(head){ head.getWorldPosition(tgt); } else { new THREE.Box3().setFromObject(root).getCenter(tgt); tgt.y+=0.45; }
-        camera.position.set(tgt.x,tgt.y+0.02,tgt.z+0.78);
-        camera.lookAt(tgt.x,tgt.y-0.03,tgt.z);
-        ready=true; resolve();
-      }, undefined, err=>reject(err));
+        if(!blinkNames.length&&'eyesClosed'in dict)blinkNames=['eyesClosed'];
+        const box=new THREE.Box3().setFromObject(root),size=new THREE.Vector3(),ctr=new THREE.Vector3();
+        box.getSize(size);box.getCenter(ctr);
+        const ty=box.max.y-size.y*0.10;
+        camera.position.set(ctr.x,ty-0.02,ctr.z+size.y*0.62);camera.lookAt(ctr.x,ty-0.06,ctr.z);
+        resolve();
+      },undefined,err=>reject(err));
     });
   }
-  function setMorph(name,v){ for(const m of morphMeshes){ const i=m.morphTargetDictionary[name]; if(i!==undefined) m.morphTargetInfluences[i]=v; } }
-  function setTalking(on){ talking=on; if(!on && mouthName){ targets[mouthName]=0; } }
+  async function load(urls){for(const u of urls){try{await loadOne(u);return true;}catch(e){}}return false;}
+  function setMorph(n,v){for(const m of morphMeshes){const i=m.morphTargetDictionary[n];if(i!==undefined)m.morphTargetInfluences[i]=v;}}
+  function setTalking(on){talking=on;if(!on&&mouthName)targets[mouthName]=0;}
   function update(){
-    const dt=clock.getDelta(); const t=clock.elapsedTime;
-    if(root){ root.position.y=Math.sin(t*1.1)*0.004; root.rotation.y=Math.sin(t*0.5)*0.03; } // gentle idle
-    // mouth
-    if(talking && mouthName){ mouthTimer-=dt; if(mouthTimer<=0){ targets[mouthName]=0.08+Math.random()*0.5; mouthTimer=0.08+Math.random()*0.06; } }
-    // blink
-    nextBlink-=dt;
-    if(nextBlink<=0){ for(const b of blinkNames) targets[b]=1; if(nextBlink<-0.12){ for(const b of blinkNames) targets[b]=0; nextBlink=2+Math.random()*4; } }
-    // smooth toward targets
-    for(const name in targets){ const c=current[name]||0; const nc=c+(targets[name]-c)*Math.min(1,dt*18); current[name]=nc; setMorph(name,nc); }
+    if(!clock)return;const dt=clock.getDelta(),t=clock.elapsedTime;
+    if(root){root.position.y=Math.sin(t*1.1)*0.004;root.rotation.y=Math.sin(t*0.45)*0.04;}
+    if(talking&&mouthName){mouthTimer-=dt;if(mouthTimer<=0){targets[mouthName]=0.08+Math.random()*0.5;mouthTimer=0.07+Math.random()*0.06;}}
+    nextBlink-=dt;if(nextBlink<=0){for(const b of blinkNames)targets[b]=1;if(nextBlink<-0.12){for(const b of blinkNames)targets[b]=0;nextBlink=2+Math.random()*4;}}
+    for(const n in targets){const c=current[n]||0,nc=c+(targets[n]-c)*Math.min(1,dt*18);current[n]=nc;setMorph(n,nc);}
     renderer.render(scene,camera);
   }
-  return {init,load,setTalking,isReady:()=>ready};
+  return {init,load,setTalking};
 })();
 
-/* ============ config ============ */
-const MODEL="gemini-2.5-flash"; // if you get a 404, swap for whatever shows "Free" in AI Studio
-const ENDPOINT=()=>`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(state.apiKey)}`;
-const ROLE_LABELS={marketing:{t:"Marketing",s:"Coordinator / Digital / Analyst"},data_analysis:{t:"Data Analysis",s:"Data / Business Analyst"},ai_ml:{t:"AI / ML",s:"Data Scientist / ML Engineer"}};
-const ROUNDS={round1:{t:"Round 1",s:"Recruiter screen"},round2:{t:"Round 2",s:"Behavioral (STAR)"},round3:{t:"Round 3",s:"Technical / case"}};
-const ACCENTS=[{k:"en-GB",t:"British"},{k:"en-US",t:"American"},{k:"en-AU",t:"Australian"},{k:"en-IN",t:"Indian"}];
-const state={bank:null,role:"marketing",round:"round1",minutes:20,accent:"en-GB",voice:null,apiKey:"",intl:false,handsfree:true,
-  history:[],system:"",recognition:null,recognizing:false,startTime:0,timerId:null,finished:false,lastLine:""};
-
-state.apiKey=localStorage.getItem("gemini_key")||"";
-state.avatarUrl=localStorage.getItem("avatar_url")||"";
+/* ---------- data ---------- */
+const ROLES={marketing:{t:"Marketing",s:"Coordinator / Digital",ic:"📣"},data_analysis:{t:"Data Analysis",s:"Data / BI Analyst",ic:"📊"},ai_ml:{t:"AI / ML",s:"Data Scientist / MLE",ic:"🤖"}};
+const ROUNDS={round1:{t:"Round 1",s:"Recruiter screen",ic:"🤝"},round2:{t:"Round 2",s:"Behavioral",ic:"💬"},round3:{t:"Round 3",s:"Technical",ic:"🧩"}};
+const ACCENTS=[{k:"en-GB",t:"British",ic:"🇬🇧"},{k:"en-US",t:"American",ic:"🇺🇸"},{k:"en-AU",t:"Australian",ic:"🇦🇺"},{k:"en-IN",t:"Indian",ic:"🇮🇳"}];
+const FACES=[
+  {t:"Man",ic:"👨",url:"https://models.readyplayer.me/6185a4acfb622cf1cdc49348.glb"},
+  {t:"Man (alt)",ic:"🧑",url:"https://readyplayerme.github.io/visage/male.glb"},
+  {t:"Woman",ic:"👩",url:"https://readyplayerme.github.io/visage/female.glb"}
+];
+const state={bank:null,role:"marketing",round:"round1",minutes:20,accent:"en-GB",voice:null,intl:false,
+  avatarUrl:FACES[0].url,questions:[],idx:0,answers:[],recognition:null,recognizing:false,answering:false,
+  ansStart:0,ansText:"",finished:false};
+state.avatarUrl=localStorage.getItem("avatar_url")||FACES[0].url;
 
 fetch("interview_question_bank.json").then(r=>{if(!r.ok)throw 0;return r.json();}).then(b=>state.bank=b)
- .catch(()=>setupStatus("Couldn't load interview_question_bank.json — make sure it's uploaded next to index.html with that exact name.",true));
+  .catch(()=>setupStatus("Couldn't load interview_question_bank.json — upload it next to index.html.",true));
 
-/* ----- option grids ----- */
-function makeOptions(){
-  build("roleGrid",ROLE_LABELS,"role",k=>k===state.role,k=>{state.role=k;refresh();});
-  const ag=document.getElementById("accentGrid");
-  ACCENTS.forEach(a=>ag.appendChild(optBtn(a.t,a.k,a.k===state.accent,()=>{state.accent=a.k;pickVoiceForAccent();refresh();},"accent")));
-  build("roundGrid",ROUNDS,"round",k=>k===state.round,k=>{state.round=k;refresh();});
-}
-function build(id,obj,group,pressed,cb){const g=document.getElementById(id);Object.entries(obj).forEach(([k,v])=>g.appendChild(optBtn(v.t,v.s,pressed(k),()=>cb(k),group)));}
-function optBtn(title,sub,pressed,onClick,group){const b=document.createElement("button");b.className="opt";b.dataset.group=group;b.setAttribute("aria-pressed",pressed);b.innerHTML=`${title}<small>${sub}</small>`;
+/* ---------- option grids ---------- */
+function optBtn(ic,title,sub,pressed,onClick,group){const b=document.createElement("button");b.className="opt";b.dataset.group=group;b.setAttribute("aria-pressed",pressed);
+  b.innerHTML=`<span class="ic">${ic}</span>${title}<small>${sub}</small>`;
   b.onclick=()=>{document.querySelectorAll(`.opt[data-group="${group}"]`).forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");onClick();};return b;}
+function makeOptions(){
+  const rg=document.getElementById("roleGrid");Object.entries(ROLES).forEach(([k,v])=>rg.appendChild(optBtn(v.ic,v.t,v.s,k===state.role,()=>{state.role=k;refresh();},"role")));
+  const ag=document.getElementById("accentGrid");ACCENTS.forEach(a=>ag.appendChild(optBtn(a.ic,a.t,a.k,a.k===state.accent,()=>{state.accent=a.k;pickVoice();refresh();},"accent")));
+  const og=document.getElementById("roundGrid");Object.entries(ROUNDS).forEach(([k,v])=>og.appendChild(optBtn(v.ic,v.t,v.s,k===state.round,()=>{state.round=k;refresh();},"round")));
+  const fg=document.getElementById("faceGrid");FACES.forEach(f=>fg.appendChild(optBtn(f.ic,f.t,"tap to use",f.url===state.avatarUrl,()=>{state.avatarUrl=f.url;document.getElementById("avatarUrl").value="";localStorage.setItem("avatar_url",f.url);},"face")));
+}
 function refresh(){const avg={round1:2.5,round2:3,round3:3.5}[state.round];const q=Math.max(1,Math.round(state.minutes/avg));document.getElementById("minsLabel").textContent=`${state.minutes} min · ~${q} Q`;}
 
-/* ----- voices ----- */
-function loadVoices(){const voices=speechSynthesis.getVoices().filter(v=>v.lang.startsWith("en"));const sel=document.getElementById("voiceSelect");
-  if(!voices.length){sel.innerHTML="<option>No English voices found</option>";return;}
-  sel.innerHTML="";voices.forEach(v=>{const o=document.createElement("option");o.value=v.name;o.textContent=`${v.name} (${v.lang})`;sel.appendChild(o);});
-  sel.onchange=()=>{state.voice=voices.find(v=>v.name===sel.value)||null;};window._voices=voices;pickVoiceForAccent();}
-function pickVoiceForAccent(){const voices=window._voices||[];const m=voices.find(v=>v.lang.toLowerCase().startsWith(state.accent.toLowerCase()))||voices.find(v=>v.lang.startsWith("en"));
-  if(m){state.voice=m;const sel=document.getElementById("voiceSelect");if(sel)sel.value=m.name;}}
+/* ---------- voices ---------- */
+function loadVoices(){const v=speechSynthesis.getVoices().filter(x=>x.lang.startsWith("en"));const sel=document.getElementById("voiceSelect");
+  if(!v.length){sel.innerHTML="<option>No English voices</option>";return;}
+  sel.innerHTML="";v.forEach(x=>{const o=document.createElement("option");o.value=x.name;o.textContent=`${x.name} (${x.lang})`;sel.appendChild(o);});
+  sel.onchange=()=>{state.voice=v.find(x=>x.name===sel.value)||null;};window._voices=v;pickVoice();}
+function pickVoice(){const v=window._voices||[];const m=v.find(x=>x.lang.toLowerCase().startsWith(state.accent.toLowerCase()))||v.find(x=>x.lang.startsWith("en"));if(m){state.voice=m;const sel=document.getElementById("voiceSelect");if(sel)sel.value=m.name;}}
 speechSynthesis.onvoiceschanged=loadVoices;
 
-/* ----- sampler + prompt ----- */
+/* ---------- sampler ---------- */
 function buildInterview(){const pool=[...state.bank.roles[state.role][state.round]];
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-  const avg=state.bank.config.avgMinutesPerQuestion[state.round];const count=Math.max(1,Math.round(state.minutes/avg));
-  let qs=pool.slice(0,count);
+  const avg=state.bank.config.avgMinutesPerQuestion[state.round];const n=Math.max(1,Math.round(state.minutes/avg));
+  let qs=pool.slice(0,n);
   if(state.intl&&state.round==="round1"){const e=[...state.bank.international].sort(()=>Math.random()-0.5).slice(0,2);qs.splice(1,0,...e);}
   return qs;}
-function buildSystemPrompt(questions){const r=ROLE_LABELS[state.role],rd=ROUNDS[state.round];
-  return [`You are a warm, professional ${r.t} interviewer at an English-speaking company, conducting ${rd.t} (${rd.s}).`,
-  `The candidate is practising, so sound natural and human.`,`RULES:`,
-  `- Open with a short friendly greeting, then ask the FIRST question.`,
-  `- Ask ONE question at a time, working through the list naturally.`,
-  `- Briefly acknowledge each answer in a few words ("Thanks, that's helpful." / "Great example.") BEFORE the next question, so it flows like a real conversation.`,
-  `- You MAY ask one short follow-up when an answer is thin, then move on.`,
-  `- Keep every turn to 1-3 sentences. Never lecture or give feedback/scores.`,
-  `- After the questions are covered, give a brief warm closing, then on a new line output exactly: INTERVIEW_COMPLETE`,
-  ``,`QUESTIONS:`,...questions.map((q,i)=>`${i+1}. ${q}`)].join("\n");}
 
-/* ----- gemini ----- */
-async function callGemini(system,history,maxTokens=320){
-  const res=await fetch(ENDPOINT(),{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({system_instruction:{parts:[{text:system}]},contents:history,generationConfig:{temperature:0.85,maxOutputTokens:maxTokens}})});
-  if(!res.ok){const t=await res.text();throw new Error(`Gemini ${res.status}: ${t.slice(0,180)}`);}
-  const d=await res.json();return (d?.candidates?.[0]?.content?.parts?.map(p=>p.text).join("")||"").trim();}
+/* ---------- speech ---------- */
+function speak(text){return new Promise(res=>{Avatar.setTalking(true);document.getElementById("fallorb").classList.add("speaking");
+  const u=new SpeechSynthesisUtterance(text);if(state.voice)u.voice=state.voice;u.rate=0.98;
+  const done=()=>{Avatar.setTalking(false);document.getElementById("fallorb").classList.remove("speaking");res();};
+  u.onend=done;u.onerror=done;speechSynthesis.cancel();speechSynthesis.speak(u);});}
 
-/* ----- speak + lip sync ----- */
-function speak(text){return new Promise(resolve=>{
-  setSpeaking(true);
-  const u=new SpeechSynthesisUtterance(text);
-  if(state.voice)u.voice=state.voice; u.rate=0.98;
-  u.onend=()=>{setSpeaking(false);resolve();}; u.onerror=()=>{setSpeaking(false);resolve();};
-  speechSynthesis.cancel(); speechSynthesis.speak(u);
-});}
-function setSpeaking(on){
-  Avatar.setTalking(on);
-  document.getElementById("fallorb").classList.toggle("speaking",on);
-  const mic=document.getElementById("micBtn");
-  if(on){mic.disabled=true;mic.textContent="Examiner is speaking…";}
-}
+function setupRecognition(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;
+  const r=new SR();r.lang="en-US";r.interimResults=true;r.continuous=true;
+  r.onresult=e=>{let f="";for(let i=0;i<e.results.length;i++)if(e.results[i].isFinal)f+=e.results[i][0].transcript+" ";state.ansText=f.trim();};
+  r.onerror=()=>{};return r;}
 
-/* ----- recognition (smooth, hands-free) ----- */
-let silenceTimer=null, gotSpeech=false, finalText="";
-function setupRecognition(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){liveStatus("Speech recognition needs Chrome or Edge on desktop.",true);return false;}
-  const rec=new SR(); rec.lang="en-US"; rec.interimResults=true; rec.continuous=true;
-  rec.onstart=()=>{state.recognizing=true;gotSpeech=false;finalText="";liveStatus("Listening… just speak.",false,true);
-    const m=document.getElementById("micBtn");m.disabled=false;m.classList.add("rec");m.textContent="● Listening — tap when done";};
-  rec.onresult=e=>{let interim="";for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;
-      if(e.results[i].isFinal)finalText+=t+" ";else interim+=t;}
-    if((finalText+interim).trim())gotSpeech=true;
-    liveStatus("“"+(finalText+interim).trim()+"”",false,true);
-    if(state.handsfree){clearTimeout(silenceTimer);silenceTimer=setTimeout(()=>{if(gotSpeech)rec.stop();},1700);}};
-  rec.onerror=e=>{if(e.error==="no-speech"){return;}liveStatus("Mic: "+e.error+" (check permission).",true);};
-  rec.onend=()=>{state.recognizing=false;clearTimeout(silenceTimer);
-    const m=document.getElementById("micBtn");m.classList.remove("rec");
-    const ans=finalText.trim();
-    if(ans){submitAnswer(ans);}
-    else{liveStatus("Didn't catch that — tap to try again.",false);m.disabled=false;m.textContent="🎤 Tap to answer";}};
-  state.recognition=rec;return true;}
-function startListening(){try{state.recognition.start();}catch(_){}}
-
-/* ----- flow ----- */
-async function startInterview(){
-  state.apiKey=document.getElementById("apiKey").value.trim();
-  state.avatarUrl=document.getElementById("avatarUrl").value.trim();
-  state.intl=document.getElementById("intl").checked;
-  state.handsfree=document.getElementById("handsfree").checked;
-  if(!state.apiKey){setupStatus("Please paste your Gemini API key first.",true);return;}
+/* ---------- flow ---------- */
+function startInterview(){
   if(!state.bank){setupStatus("Question bank not loaded yet.",true);return;}
-  localStorage.setItem("gemini_key",state.apiKey);
-  localStorage.setItem("avatar_url",state.avatarUrl);
-  if(!setupRecognition())return;
-
+  const typed=document.getElementById("avatarUrl").value.trim();if(typed)state.avatarUrl=typed;
+  state.intl=document.getElementById("intl").checked;
+  state.recognition=setupRecognition();
+  state.questions=buildInterview();state.idx=0;state.answers=[];state.finished=false;
   document.getElementById("setup").style.display="none";
+  document.getElementById("report").style.display="none";
   document.getElementById("stage").style.display="block";
-  document.getElementById("roundName").textContent=`${ROLE_LABELS[state.role].t} · ${ROUNDS[state.round].t}`;
-
-  // avatar
+  renderProgress();
   Avatar.init(document.getElementById("avatarCanvas"));
-  if(state.avatarUrl){
-    document.getElementById("fallMsg").textContent="Loading your examiner…";
-    document.getElementById("avatarFallback").style.display="flex";
-    try{await Avatar.load(state.avatarUrl);document.getElementById("avatarFallback").style.display="none";}
-    catch(err){document.getElementById("fallMsg").textContent="Couldn't load that avatar link — using a simple examiner. (Check the .glb link.)";}
-  } else { document.getElementById("avatarFallback").style.display="flex";document.getElementById("fallMsg").textContent="Voice examiner (add a .glb link for a 3D face)"; }
-
-  const questions=buildInterview();
-  state.system=buildSystemPrompt(questions);
-  state.history=[{role:"user",parts:[{text:"Please begin the interview now."}]}];
-  state.finished=false;
-  startTimer();
-  document.getElementById("micBtn").disabled=true;
-  await examinerTurn();
+  const fb=document.getElementById("avatarFallback");fb.style.display="flex";document.getElementById("fallMsg").textContent="Loading your examiner…";
+  const tryUrls=[state.avatarUrl,FACES[0].url,FACES[1].url].filter((v,i,a)=>a.indexOf(v)===i);
+  Avatar.load(tryUrls).then(ok=>{fb.style.display=ok?"none":"flex";if(!ok)document.getElementById("fallMsg").textContent="Using a simple examiner (3D face couldn't load — try another face next time).";});
+  askCurrent();
 }
-async function examinerTurn(){
-  try{
-    document.getElementById("examinerLine").textContent="…";
-    let line=await callGemini(state.system,state.history);
-    const done=/INTERVIEW_COMPLETE/i.test(line);
-    line=line.replace(/INTERVIEW_COMPLETE/ig,"").trim();
-    state.lastLine=line;
-    state.history.push({role:"model",parts:[{text:line}]});
-    document.getElementById("examinerLine").textContent=line; addBubble("ex",line);
-    await speak(line);
-    if(done){finishInterview();return;}
-    if(state.handsfree){liveStatus("Your turn — just start speaking.",false,true);setTimeout(startListening,250);}
-    else{const m=document.getElementById("micBtn");m.disabled=false;m.textContent="🎤 Tap to answer";liveStatus("Tap to answer.",false);}
-  }catch(err){liveStatus(err.message,true);document.getElementById("examinerLine").textContent="(error — see message below)";}
+async function askCurrent(){
+  if(state.idx>=state.questions.length){finish();return;}
+  renderProgress();
+  const btn=document.getElementById("bigBtn");btn.disabled=true;btn.classList.remove("rec");btn.textContent="Examiner is asking…";
+  document.getElementById("askState").textContent="Listen to the question…";
+  await speak(state.questions[state.idx]);
+  document.getElementById("askState").textContent="Your turn";
+  btn.disabled=false;btn.textContent="🎤 Press to answer";
 }
-function submitAnswer(answer){addBubble("me",answer);state.history.push({role:"user",parts:[{text:answer}]});liveStatus("");examinerTurn();}
-
-async function finishInterview(){
-  state.finished=true;stopTimer();speechSynthesis.cancel();
-  const m=document.getElementById("micBtn");m.disabled=true;m.textContent="Interview complete";
-  document.getElementById("stage").style.display="none";
-  const rep=document.getElementById("report");rep.style.display="block";
-  document.getElementById("reportRole").textContent=`${ROLE_LABELS[state.role].t} · ${ROUNDS[state.round].t} · scoring…`;
-  document.getElementById("scores").innerHTML="";document.getElementById("written").innerHTML="<p class='hint'>Generating your feedback…</p>";
-  const transcript=state.history.map(h=>(h.role==="model"?"INTERVIEWER: ":"CANDIDATE: ")+h.parts[0].text).join("\n");
-  const sys="You are an expert interview coach. Score the CANDIDATE only. Return STRICT JSON, no markdown: "+
-    '{"scores":{"Relevance":n,"Structure":n,"Clarity":n,"Confidence":n,"Technical":n},'+
-    '"feedback":[{"area":"...","strength":"...","improve":"..."}],"tips":["...","...","..."]} '+
-    "Scores are integers 1-5. One feedback item per area. Exactly 3 tips.";
-  try{let out=await callGemini(sys,[{role:"user",parts:[{text:transcript}]}],700);out=out.replace(/```json|```/g,"").trim();
-    renderReport(JSON.parse(out));document.getElementById("reportRole").textContent=`${ROLE_LABELS[state.role].t} · ${ROUNDS[state.round].t}`;}
-  catch(err){document.getElementById("written").innerHTML="<div class='fb'>Couldn't build the report ("+err.message+"). Try a slightly longer interview.</div>";}
+function pressBig(){
+  if(state.finished)return;const btn=document.getElementById("bigBtn");
+  if(!state.answering){
+    state.answering=true;state.ansText="";state.ansStart=Date.now();
+    if(state.recognition){try{state.recognition.start();}catch(_){}}
+    btn.classList.add("rec");btn.textContent="● Recording — press when finished";
+    document.getElementById("askState").textContent="Speak your answer…";
+  } else {
+    state.answering=false;
+    if(state.recognition){try{state.recognition.stop();}catch(_){}}
+    const secs=Math.round((Date.now()-state.ansStart)/1000);
+    setTimeout(()=>{state.answers.push({q:state.questions[state.idx],a:state.ansText,secs,words:state.ansText?state.ansText.split(/\s+/).filter(Boolean).length:0});
+      state.idx++;btn.classList.remove("rec");askCurrent();},300);
+  }
 }
-function renderReport(d){const sc=document.getElementById("scores");sc.innerHTML="";
-  Object.entries(d.scores).forEach(([k,v])=>{const row=document.createElement("div");row.className="scorerow";
-    row.innerHTML=`<span class="name">${k}</span><div class="bar"><i style="width:${(v/5)*100}%"></i></div><span class="scoreval">${v}/5</span>`;sc.appendChild(row);});
-  const w=document.getElementById("written");w.innerHTML="";
-  (d.feedback||[]).forEach(f=>{const el=document.createElement("div");el.className="fb";el.innerHTML=`<b>${f.area}</b><br>👍 ${f.strength}<br>🎯 ${f.improve}`;w.appendChild(el);});
-  if(d.tips?.length){const t=document.createElement("div");t.className="fb";t.innerHTML="<b>Top 3 priorities</b><ul class='tips'>"+d.tips.map(x=>`<li>${x}</li>`).join("")+"</ul>";w.appendChild(t);}}
+function renderProgress(){const p=document.getElementById("progress");p.innerHTML="";
+  state.questions.forEach((_,i)=>{const d=document.createElement("div");d.className="dot"+(i<state.idx?" done":i===state.idx?" now":"");p.appendChild(d);});}
 
-/* ----- timer + ui ----- */
-function startTimer(){state.startTime=Date.now();const total=state.minutes*60;
-  state.timerId=setInterval(()=>{const e=Math.floor((Date.now()-state.startTime)/1000);document.getElementById("timer").textContent=`${fmt(e)} / ${fmt(total)}`;},1000);}
-function stopTimer(){clearInterval(state.timerId);}
-function fmt(s){const m=Math.floor(s/60),x=s%60;return `${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`;}
-function addBubble(who,text){const t=document.getElementById("transcript");const b=document.createElement("div");b.className="bubble "+(who==="ex"?"ex":"me");
-  b.innerHTML=`<small>${who==="ex"?"Interviewer":"You"}</small>${text}`;t.appendChild(b);t.scrollTop=t.scrollHeight;}
-function setupStatus(msg,err){const s=document.getElementById("setupStatus");s.textContent=msg;s.className="status"+(err?" err":"");}
-function liveStatus(msg,err,listening){const s=document.getElementById("liveStatus");s.textContent=msg;s.className="status"+(err?" err":listening?" listening":"");}
+/* ---------- report (local, no AI) ---------- */
+function finish(){
+  state.finished=true;speechSynthesis.cancel();if(state.recognition){try{state.recognition.stop();}catch(_){}}
+  document.getElementById("stage").style.display="none";document.getElementById("report").style.display="block";
+  document.getElementById("reportRole").textContent=`${ROLES[state.role].t} · ${ROUNDS[state.round].t} · ${state.answers.length} questions answered`;
+  const ans=state.answers;const totalSecs=ans.reduce((a,x)=>a+x.secs,0);const totalWords=ans.reduce((a,x)=>a+x.words,0);
+  const avgSecs=ans.length?Math.round(totalSecs/ans.length):0;const avgWords=ans.length?Math.round(totalWords/ans.length):0;
+  const fillers=["um","uh","like","you know","basically","actually","kind of","sort of"];
+  let fc=0;ans.forEach(x=>{const t=(x.a||"").toLowerCase();fillers.forEach(f=>{fc+=(t.split(f).length-1);});});
+  document.getElementById("statgrid").innerHTML=
+    `<div class="stat"><b>${ans.length}</b><small>questions</small></div>
+     <div class="stat"><b>${avgSecs}s</b><small>avg answer</small></div>
+     <div class="stat"><b>${avgWords}</b><small>avg words</small></div>`;
+  const tips=[];
+  if(avgSecs&&avgSecs<35)tips.push("Your answers were quite short. Aim for 60–90 seconds and use the STAR structure (Situation, Task, Action, Result) to add detail.");
+  if(avgSecs>150)tips.push("Some answers ran long. Practise getting to the point in the first sentence, then giving one clear example.");
+  if(fc>=5)tips.push(`You used filler words about ${fc} times (um, like, you know…). A short pause sounds more confident than a filler.`);
+  if(avgSecs>=35&&avgSecs<=150&&fc<5)tips.push("Good pacing and clarity. Keep practising with different random questions to stay sharp.");
+  tips.push("Re-read your answers below and rewrite one of them — turning a rough spoken answer into a polished one is the fastest way to improve.");
+  document.getElementById("tips").innerHTML=tips.map(t=>`<div class="fb">💡 ${t}</div>`).join("");
+  document.getElementById("qaList").innerHTML=ans.map((x,i)=>
+    `<div class="qa"><div class="q">Q${i+1}. ${x.q}</div><div class="a">${x.a?x.a:"<i>(no words captured)</i>"} · ${x.secs}s</div></div>`).join("");
+}
 
-/* ----- wire ----- */
+/* ---------- wire ---------- */
 document.getElementById("mins").addEventListener("input",e=>{state.minutes=+e.target.value;refresh();});
 document.getElementById("startBtn").addEventListener("click",startInterview);
-document.getElementById("micBtn").addEventListener("click",()=>{
-  if(state.finished)return;
-  if(state.recognizing)state.recognition.stop();
-  else startListening();});
-document.getElementById("repeatBtn").addEventListener("click",()=>{if(state.lastLine&&!state.finished)speak(state.lastLine).then(()=>{if(state.handsfree)startListening();});});
-document.getElementById("endBtn").addEventListener("click",()=>{if(!state.finished)finishInterview();});
-document.getElementById("againBtn").addEventListener("click",()=>{document.getElementById("report").style.display="none";document.getElementById("transcript").innerHTML="";document.getElementById("setup").style.display="block";});
+document.getElementById("bigBtn").addEventListener("click",pressBig);
+document.getElementById("repeatBtn").addEventListener("click",()=>{if(!state.finished&&!state.answering&&state.idx<state.questions.length)askCurrent();});
+document.getElementById("endBtn").addEventListener("click",()=>{if(!state.finished)finish();});
+document.getElementById("againBtn").addEventListener("click",()=>{document.getElementById("report").style.display="none";document.getElementById("setup").style.display="block";});
 
-/* ----- face presets ----- */
-document.querySelectorAll('#faceGrid .opt').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('#faceGrid .opt').forEach(x=>x.setAttribute('aria-pressed','false'));
-    b.setAttribute('aria-pressed','true');
-    const url=b.dataset.url;
-    document.getElementById('avatarUrl').value=url; state.avatarUrl=url; localStorage.setItem('avatar_url',url);
-    setupStatus('Face selected — press Start interview.',false);
-  });
-});
-
+function setupStatus(m,e){const s=document.getElementById("setupStatus");s.textContent=m;s.className="status"+(e?" err":" ok");}
 makeOptions();refresh();loadVoices();
-if(state.apiKey)document.getElementById("apiKey").value=state.apiKey;
-if(state.avatarUrl)document.getElementById("avatarUrl").value=state.avatarUrl;
+if(state.avatarUrl)document.getElementById("avatarUrl").value="";
 </script>
 </body>
 </html>
