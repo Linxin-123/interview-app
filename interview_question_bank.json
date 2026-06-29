@@ -1,259 +1,320 @@
-{
-  "config": {
-    "note": "targetMinutes drives how many questions are sampled. Lower them for a quick mock, raise them for a full-length one.",
-    "roundDurations": { "round1": 20, "round2": 30, "round3": 35 },
-    "avgMinutesPerQuestion": { "round1": 2.5, "round2": 3, "round3": 3.5 },
-    "roundPurpose": {
-      "round1": "Recruiter / HR screen: motivation, fit, background.",
-      "round2": "Hiring-manager behavioral: STAR-method competency questions.",
-      "round3": "Technical / case: role-specific problem-solving."
-    }
-  },
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interview Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg1:#1b1535;--bg2:#241a44;--rose:#ff9ecb;--lav:#b9a4ff;--vio:#8b6cff;
+    --ink:#f3eefe;--muted:#b3a8d6;--line:rgba(185,164,255,.18);--glass:rgba(45,33,82,.55);--good:#7fe6b0;--radius:22px;}
+  *{box-sizing:border-box}html,body{margin:0;height:100%}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);min-height:100%;
+    background:radial-gradient(900px 600px at 12% -8%,rgba(255,158,203,.18),transparent 60%),
+      radial-gradient(1000px 700px at 88% 4%,rgba(139,108,255,.28),transparent 60%),
+      radial-gradient(800px 800px at 50% 110%,rgba(127,230,176,.10),transparent 60%),
+      linear-gradient(160deg,var(--bg1),var(--bg2));
+    display:flex;flex-direction:column;align-items:center;padding:26px 16px 70px;position:relative;overflow-x:hidden}
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 4s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.18}50%{opacity:.8}}
+  .wrap{width:100%;max-width:680px;position:relative;z-index:1}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+  .serif{font-family:'Fraunces',serif;font-style:italic}
+  header.top{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .logo{width:42px;height:42px;border-radius:50%;position:relative;background:radial-gradient(circle at 34% 30%,var(--rose),#d65a96 72%);box-shadow:0 0 26px rgba(255,158,203,.55)}
+  .logo::after{content:"✦";position:absolute;top:-8px;right:-6px;color:var(--lav);font-size:13px}
+  header.top h1{font-size:23px;margin:0;font-weight:600}header.top span{color:var(--muted);font-size:13px}
+  .card{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);
+    border-radius:var(--radius);padding:26px;box-shadow:0 30px 70px -40px #000,inset 0 1px 0 rgba(255,255,255,.05)}
+  .seclabel{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-size:13px;letter-spacing:.04em;color:var(--lav);margin:0 0 12px;font-weight:500}
+  .seclabel .n{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:12px;background:linear-gradient(135deg,var(--vio),var(--rose));color:#1b1535;font-weight:700}
+  .grid{display:grid;gap:12px}.cols-3{grid-template-columns:repeat(3,1fr)}.cols-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:540px){.cols-3,.cols-4{grid-template-columns:1fr 1fr}}
+  .opt{cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:16px;padding:14px 12px;text-align:left;color:var(--ink);font-size:14px;font-weight:500;transition:.16s;line-height:1.25}
+  .opt .ic{font-size:20px;display:block;margin-bottom:7px}.opt small{display:block;color:var(--muted);font-weight:400;font-size:11.5px;margin-top:3px}
+  .opt:hover{border-color:var(--lav);transform:translateY(-1px)}
+  .opt[aria-pressed="true"]{border-color:transparent;color:#1b1535;background:linear-gradient(135deg,var(--lav),var(--rose));box-shadow:0 10px 26px -10px var(--rose)}
+  .opt[aria-pressed="true"] small{color:rgba(27,21,53,.7)}
+  .field{margin-top:24px}.slider-row{display:flex;align-items:center;gap:14px}
+  input[type=range]{flex:1;accent-color:var(--rose)}
+  .pill{font-family:'Space Grotesk';font-size:15px;min-width:120px;color:var(--rose)}
+  .hint{color:var(--muted);font-size:12.5px;line-height:1.55;margin-top:9px}a{color:var(--lav)}
+  button.primary{margin-top:28px;width:100%;border:none;cursor:pointer;color:#1b1535;background:linear-gradient(95deg,var(--rose),var(--lav));font-family:'Space Grotesk';font-weight:700;font-size:16px;padding:16px;border-radius:16px;box-shadow:0 16px 36px -14px var(--rose);transition:.16s}
+  button.primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  button.ghost{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);border-radius:13px;padding:11px 16px;cursor:pointer;font-family:inherit;font-size:14px}
+  button.ghost:hover{border-color:var(--lav)}
+  .status{font-size:13px;color:var(--muted);margin-top:10px;min-height:18px}.status.ok{color:var(--good)}.status.err{color:var(--rose)}
+  .voicebox{width:100%;margin-top:10px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:11px 13px;font-family:inherit;font-size:13.5px}
 
-  "international": [
-    "Why do you want to work in this country specifically?",
-    "What is your current work authorisation or visa status?",
-    "Will you need visa sponsorship now or in the future?",
-    "Tell me about a time you adapted to a new culture or work environment.",
-    "Have you worked in an English-speaking, multicultural team before? How did it go?",
-    "How do you keep improving your professional English?",
-    "What attracted you to studying or living here?",
-    "How do you handle communication differences across cultures?",
-    "Are you comfortable with the local work style and pace?",
-    "Do you see yourself staying here long-term?"
-  ],
+  .stage{display:none;text-align:center}
+  #avatarWrap{position:relative;width:100%;height:460px;border-radius:20px;overflow:hidden;border:1px solid var(--line);
+    background:radial-gradient(130% 95% at 50% 0%,#34255f 0%,#1a1230 72%)}
+  #examinerVideo{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:none;background:#1a1230}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 80% at 50% 30%,transparent 55%,rgba(20,12,40,.55) 100%),
+      linear-gradient(to top,rgba(20,12,40,.6),transparent 40%)}
+  #speakRing{position:absolute;inset:0;pointer-events:none;border-radius:20px;box-shadow:inset 0 0 0 0 rgba(255,158,203,0);transition:.25s}
+  /* examiner is talking */
+  #avatarWrap.speaking #speakRing{box-shadow:inset 0 0 90px -20px var(--rose);animation:glow 1.1s ease-in-out infinite}
+  @keyframes glow{50%{box-shadow:inset 0 0 120px -18px var(--rose)}}
+  #avatarWrap.speaking #examinerVideo{animation:bob 2.6s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-4px) scale(1.03)}}
+  /* you are answering — examiner listens */
+  #avatarWrap.listening #speakRing{box-shadow:inset 0 0 70px -26px var(--lav);animation:listenpulse 2.4s ease-in-out infinite}
+  @keyframes listenpulse{50%{box-shadow:inset 0 0 90px -24px var(--lav)}}
+  .speakdot{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:none;align-items:center;gap:6px;
+    background:rgba(20,12,40,.5);padding:6px 14px;border-radius:30px;font-family:'Space Grotesk';font-size:12px;color:#fff}
+  #avatarWrap.speaking .speakdot{display:flex}
+  .speakdot i{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:pp 1s infinite}
+  .speakdot i:nth-child(2){animation-delay:.2s}.speakdot i:nth-child(3){animation-delay:.4s}
+  @keyframes pp{50%{transform:scale(1.8);opacity:.5}}
+  .listendot{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:none;align-items:center;gap:8px;
+    background:rgba(20,12,40,.5);padding:6px 14px;border-radius:30px;font-family:'Space Grotesk';font-size:12px;color:var(--lav)}
+  #avatarWrap.listening .listendot{display:flex}
+  .listendot .mic{width:7px;height:7px;border-radius:50%;background:var(--lav);animation:pp 1.4s infinite}
+  #avatarFallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--muted);padding:24px;text-align:center}
+  .fallorb{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--lav),#5a3fc0 72%);box-shadow:0 0 46px -6px var(--lav)}
+  #avatarWrap.speaking .fallorb{animation:po 1.2s ease-out infinite}@keyframes po{50%{transform:scale(1.05)}}
+  .progress{display:flex;gap:7px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.16)}.dot.done{background:var(--lav)}.dot.now{background:var(--rose);box-shadow:0 0 10px var(--rose)}
+  .askstate{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--lav);margin:14px 0 4px;min-height:26px}
+  .qtext{font-size:14.5px;color:var(--ink);background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:14px;padding:12px 15px;margin:4px 0 0;line-height:1.5;min-height:20px}
+  .bigbtn{margin-top:14px;width:100%;border:none;cursor:pointer;border-radius:18px;padding:20px;font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#1b1535;background:linear-gradient(95deg,var(--lav),var(--rose));transition:.15s}
+  .bigbtn.rec{background:linear-gradient(95deg,#ff6f9f,var(--rose));animation:rec 1.1s infinite}@keyframes rec{50%{filter:brightness(1.18)}}
+  .bigbtn:disabled{opacity:.55;cursor:not-allowed;color:rgba(27,21,53,.6)}
+  .subrow{display:flex;gap:10px;justify-content:center;margin-top:14px}
+  .report{display:none}
+  .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .stat{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+  .stat b{display:block;font-family:'Space Grotesk';font-size:24px;color:var(--rose)}.stat small{color:var(--muted);font-size:11.5px}
+  .fb{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px;font-size:14px;line-height:1.55}
+  .qa{border-top:1px dashed var(--line);padding:12px 0;font-size:13.5px;line-height:1.5}.qa .q{color:var(--lav)}.qa .a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="wrap">
+  <header class="top"><div class="logo"></div>
+    <div><h1>Interview Studio</h1><span class="serif">practise out loud, with a real face that talks back</span></div></header>
 
-  "roles": {
-    "marketing": {
-      "label": "Marketing (Coordinator / Digital / Analyst)",
-      "round1": [
-        "Tell me about yourself and how you got into marketing.",
-        "Why are you interested in this marketing role?",
-        "Why do you want to work for our company and brand?",
-        "Walk me through your resume.",
-        "What do you know about our products and our target audience?",
-        "Which marketing channels are you most comfortable with?",
-        "Which marketing tools have you used, such as Google Analytics, Meta Ads, or HubSpot?",
-        "What is your favourite marketing campaign by any brand, and why?",
-        "How do you stay up to date with marketing trends?",
-        "Where do you think digital marketing is heading in the next few years?",
-        "What does a strong brand mean to you?",
-        "Describe your experience with social media marketing.",
-        "How comfortable are you working with data and analytics in marketing?",
-        "What are your salary expectations?",
-        "What are your strengths as a marketer?",
-        "What is an area you are working to improve?",
-        "How do you handle feedback on your creative work?",
-        "Do you prefer working on strategy or execution, and why?",
-        "What motivates you most in a marketing job?",
-        "How would your past colleagues describe you?",
-        "What kind of marketing content do you enjoy creating most?",
-        "Do you have any questions for us?"
-      ],
-      "round2": [
-        "Tell me about a successful campaign you ran, including the goal, your role, and the result.",
-        "Describe a campaign that underperformed and what you changed.",
-        "Tell me about a time you used data to change a marketing decision.",
-        "Describe a time you managed several deadlines or priorities at once.",
-        "Tell me about a time you had to persuade a stakeholder to back your idea.",
-        "Describe a time you worked with a difficult team member or client.",
-        "Tell me about a time you took initiative on a project no one asked you to do.",
-        "Describe a time you had to deliver results within a very limited budget.",
-        "Tell me about a creative idea you championed from start to finish.",
-        "Describe a project that failed and what you learned from it.",
-        "Tell me about a time you had to learn a new tool or platform quickly.",
-        "Describe a time you received tough feedback and how you responded.",
-        "Tell me about a time you collaborated with sales, design, or product.",
-        "Describe a time you had to hit an aggressive growth target.",
-        "Tell me about a time you spotted an opportunity others missed.",
-        "Describe a time you made a decision without complete information.",
-        "Tell me about a time you handled a brand or PR problem.",
-        "Describe a time you improved a process or made something more efficient.",
-        "Tell me about a time your idea was rejected and how you handled it.",
-        "Describe a time you went above and beyond to get a result.",
-        "Tell me about a time you managed a campaign end to end.",
-        "Describe a time you had to balance creativity with business goals."
-      ],
-      "round3": [
-        "How would you launch our product in a new market? Walk me through your plan.",
-        "How do you measure a campaign's success, and which KPIs matter most?",
-        "Explain CAC, CLV, and ROAS, and how they relate to each other.",
-        "Our website has high traffic but low conversions. How would you diagnose and fix it?",
-        "You have a 10,000 dollar budget. How would you allocate it across channels and why?",
-        "Estimate the potential market size for a new subscription coffee product.",
-        "How would you set up and interpret an A/B test on an email subject line?",
-        "How would you grow our Instagram following from 10,000 to 50,000?",
-        "How would you improve our email open and click-through rates?",
-        "A competitor just cut their prices. How should our marketing respond?",
-        "How would you build a content strategy for a B2B SaaS product?",
-        "Walk me through how you would plan a product launch timeline.",
-        "How would you segment our customer base for more effective targeting?",
-        "What is your approach to SEO for a brand-new website?",
-        "How would you measure brand awareness rather than just sales?",
-        "A campaign's ROAS is dropping over time. How do you investigate?",
-        "For a startup, how would you decide between paid ads and organic growth?",
-        "How would you use customer data to personalise our marketing?",
-        "Design a referral or loyalty program for our product.",
-        "How would you handle a campaign that goes viral for the wrong reasons?",
-        "Which metrics would you put on a marketing dashboard for the CEO?",
-        "How would you split budget between brand building and performance marketing?"
-      ]
-    },
+  <section id="setup" class="card">
+    <p class="seclabel"><span class="n">1</span> Choose a role</p>
+    <div class="grid cols-3" id="roleGrid"></div>
+    <div class="field"><p class="seclabel"><span class="n">2</span> Examiner accent</p>
+      <div class="grid cols-4" id="accentGrid"></div>
+      <select id="voiceSelect" class="voicebox"><option>Loading voices…</option></select></div>
+    <div class="field"><p class="seclabel"><span class="n">3</span> Round</p><div class="grid cols-3" id="roundGrid"></div></div>
+    <div class="field"><p class="seclabel"><span class="n">4</span> How long</p>
+      <div class="slider-row"><input type="range" id="mins" min="5" max="45" step="5" value="20"><span class="pill" id="minsLabel">20 min · ~8 Q</span></div></div>
+    <label class="hint" style="display:flex;gap:8px;align-items:center;margin-top:18px">
+      <input type="checkbox" id="intl" style="width:auto;accent-color:var(--rose)"> Add international-candidate questions (visa, moving country)</label>
+    <button class="primary" id="startBtn">Begin interview →</button>
+    <p class="status" id="setupStatus"></p>
+  </section>
 
-    "data_analysis": {
-      "label": "Data Analysis (Data Analyst / Business Analyst)",
-      "round1": [
-        "Tell me about yourself and your path into data analysis.",
-        "Why are you interested in this data analyst role?",
-        "Why do you want to work for our company?",
-        "Walk me through a data project from start to finish.",
-        "Which tools are you strongest in, such as SQL, Python, R, Excel, Tableau, or Power BI?",
-        "On a scale of 1 to 10, how would you rate your SQL, and why?",
-        "Describe your experience with data visualisation.",
-        "How do you explain technical findings to non-technical stakeholders?",
-        "What kinds of data have you worked with, such as sales, web, survey, or financial?",
-        "What project are you most proud of, and why?",
-        "How do you make sure your analysis is accurate before sharing it?",
-        "How do you stay current with data tools and techniques?",
-        "What is your experience with statistics?",
-        "Have you worked with large datasets, and how large were they?",
-        "Do you prefer building dashboards or doing deep-dive analysis?",
-        "How do you prioritise when several stakeholders need data at the same time?",
-        "What does data-driven decision making mean to you?",
-        "Describe your experience cleaning messy data.",
-        "What are your strengths as an analyst?",
-        "What is an area you want to grow in?",
-        "What are your salary expectations?",
-        "Do you have any questions for us?"
-      ],
-      "round2": [
-        "Tell me about a time your analysis influenced a real business decision.",
-        "Describe a time you found an error in your own data or analysis.",
-        "Tell me about a time you delivered insights under a tight deadline.",
-        "Describe a time stakeholders disagreed with your findings.",
-        "Tell me about a time you had to work with very messy or incomplete data.",
-        "Describe a time you had to learn a new tool or technique quickly.",
-        "Tell me about a time you simplified a complex analysis for an audience.",
-        "Describe a time you automated or improved a manual process.",
-        "Tell me about a time you had to push back on a data request.",
-        "Describe a time you discovered an unexpected or surprising insight.",
-        "Tell me about a time you handled conflicting priorities from different teams.",
-        "Describe a time a recommendation you made turned out to be wrong.",
-        "Tell me about a time you collaborated with engineers or other analysts.",
-        "Describe a time you had to defend your methodology.",
-        "Tell me about a time you turned raw data into a clear story.",
-        "Describe a time you dealt with ambiguous requirements.",
-        "Tell me about a time your analysis saved the company time or money.",
-        "Describe a time you had to deliver bad news that came from the data.",
-        "Tell me about a time you owned a project end to end.",
-        "Describe a time you had to balance speed against accuracy.",
-        "Tell me about a time you helped or mentored a colleague with data.",
-        "Describe a time you had to question the data you were given."
-      ],
-      "round3": [
-        "How would you write a SQL query to find the top 5 customers by total revenue?",
-        "Explain the difference between INNER JOIN, LEFT JOIN, and FULL OUTER JOIN.",
-        "How would you find duplicate rows in a table?",
-        "What is the difference between WHERE and HAVING?",
-        "Explain GROUP BY with an example.",
-        "How do you handle missing values in a dataset?",
-        "How do you detect and handle outliers?",
-        "Explain the difference between correlation and causation with an example.",
-        "What is a p-value, in plain English?",
-        "How would you design and interpret an A/B test?",
-        "A key metric dropped 20 percent last week. How do you investigate?",
-        "How would you measure the success of a new product feature?",
-        "Explain the difference between mean, median, and mode, and when each matters.",
-        "What is a normal distribution and why does it matter?",
-        "Describe a regression model and when you would use it.",
-        "Explain clustering and give a real business use case.",
-        "How would you design a dashboard for the sales team, and what would you include?",
-        "Estimate how many cups of coffee a busy city cafe sells in a day.",
-        "What is the difference between a database and a data warehouse?",
-        "How would you explain a confidence interval to a manager?",
-        "Walk me through how you would analyse customer churn.",
-        "How do you choose the right chart type for a given dataset?",
-        "What is the difference between supervised and unsupervised learning?",
-        "How do you make sure your analysis is trustworthy before you present it?"
-      ]
-    },
+  <section id="stage" class="stage card">
+    <div id="avatarWrap">
+      <video id="examinerVideo" playsinline preload="auto" poster="examiner.jpg"></video>
+      <div class="vignette"></div><div id="speakRing"></div>
+      <div class="speakdot"><i></i><i></i><i></i> asking</div>
+      <div class="listendot"><span class="mic"></span> listening to you</div>
+      <div id="avatarFallback"><div class="fallorb"></div><div id="fallMsg">Add <b>examiner_idle.mp4</b> to your repo for a real face</div></div>
+    </div>
+    <div class="progress" id="progress"></div>
+    <div class="askstate serif" id="askState">…</div>
+    <div class="qtext" id="qText"></div>
+    <button class="bigbtn" id="bigBtn" disabled>Examiner is asking…</button>
+    <div class="subrow"><button class="ghost" id="repeatBtn">↺ Repeat question</button><button class="ghost" id="endBtn">Finish &amp; see summary</button></div>
+  </section>
 
-    "ai_ml": {
-      "label": "AI / Machine Learning (Data Scientist / ML Engineer)",
-      "round1": [
-        "Tell me about yourself and what draws you to AI and machine learning.",
-        "Why are you interested in this AI or ML role?",
-        "Why do you want to work for our company?",
-        "Walk me through a machine learning project from start to finish.",
-        "Which ML frameworks and libraries do you use?",
-        "What programming languages are you strongest in?",
-        "Describe a model you have built and the problem it solved.",
-        "How do you stay up to date in such a fast-moving field?",
-        "What recent AI development or paper impressed you, and why?",
-        "How comfortable are you with the maths behind ML, such as linear algebra and statistics?",
-        "Have you deployed a model to production? Describe it.",
-        "What is your experience with deep learning versus classical machine learning?",
-        "Do you prefer research and experimentation, or engineering and deployment?",
-        "How do you approach a brand-new ML problem you have never seen before?",
-        "What is your experience with large language models or generative AI?",
-        "How do you think about AI ethics and responsibility?",
-        "What are your strengths as an ML practitioner?",
-        "What is an area you are actively learning right now?",
-        "Describe your experience working with data pipelines.",
-        "How do you handle a project where the data quality is poor?",
-        "What are your salary expectations?",
-        "Do you have any questions for us?"
-      ],
-      "round2": [
-        "Tell me about a time a model did not perform as expected. How did you debug it?",
-        "Describe a time you balanced model accuracy against a constraint like latency, cost, or interpretability.",
-        "Tell me about shipping a model together with engineering or product teams.",
-        "Describe a bias or fairness issue you encountered or anticipated.",
-        "Tell me about a time you explained a complex model to non-technical stakeholders.",
-        "Describe a time you had to learn a new technique for a project.",
-        "Tell me about a time your first approach failed and you had to pivot.",
-        "Describe a time you had to defend a modelling choice.",
-        "Tell me about a time you worked with messy or insufficient training data.",
-        "Describe a time you delivered a project under tight time constraints.",
-        "Tell me about a disagreement with a teammate on a technical approach.",
-        "Describe a time you improved an existing model or system.",
-        "Tell me about a time you had to choose between a simple and a complex solution.",
-        "Describe a time you caught a data leakage or evaluation mistake.",
-        "Tell me about a time you had to prioritise between competing experiments.",
-        "Describe a project where business impact mattered more than model accuracy.",
-        "Tell me about a time you had to communicate uncertainty in your results.",
-        "Describe a time you mentored someone or shared technical knowledge.",
-        "Tell me about a time you took an idea from prototype to production.",
-        "Describe a time a stakeholder had unrealistic expectations of AI.",
-        "Tell me about a time you debugged a problem with a model already in production.",
-        "Describe a time you balanced experimentation against delivery deadlines."
-      ],
-      "round3": [
-        "Explain overfitting and the bias-variance tradeoff.",
-        "How do you prevent overfitting?",
-        "How do you evaluate a classification model, and which metrics do you use and when?",
-        "Explain precision versus recall and when you would prioritise each.",
-        "What is ROC-AUC and what does it tell you?",
-        "How do you handle an imbalanced dataset?",
-        "Explain cross-validation and why it matters.",
-        "Walk me through building a churn-prediction system end to end.",
-        "Explain how a random forest works.",
-        "Explain gradient boosting at a high level.",
-        "What is the difference between bagging and boosting?",
-        "Explain how a neural network learns, including forward pass and backpropagation.",
-        "What is regularisation, such as L1 and L2, and why use it?",
-        "Explain the difference between supervised, unsupervised, and reinforcement learning.",
-        "How would you approach feature engineering for a tabular problem?",
-        "What is data leakage and how do you avoid it?",
-        "What is retrieval-augmented generation, or RAG, and when would you use it?",
-        "When would you choose fine-tuning, prompt engineering, or RAG?",
-        "How does the attention mechanism in a transformer work, at a high level?",
-        "How would you deploy a model and monitor it for drift?",
-        "Explain the difference between classification and regression with examples.",
-        "How would you reduce the size or latency of a model for production?",
-        "How would you approach reducing customer churn using machine learning, end to end?",
-        "How do you decide whether a problem actually needs ML, versus simpler rules?"
-      ]
-    }
+  <section id="report" class="report card">
+    <h2 style="margin:0">Your practice summary</h2>
+    <p class="hint" id="reportRole" style="margin-top:4px"></p>
+    <div class="statgrid" id="statgrid"></div><div id="tips"></div>
+    <h3 style="margin:22px 0 4px">What you said</h3><div id="qaList"></div>
+    <button class="primary" id="againBtn">Practise again</button>
+  </section>
+</div>
+
+<script>
+/* =========================================================================
+   EXAMINER VIDEO CONFIG  — this is where you choose how the face works.
+   -------------------------------------------------------------------------
+   MODE A (free, default): a single looping clip of a person is shown the
+     whole time. The browser voice (TTS) reads each question aloud over it.
+     => Just drop ONE file next to index.html:  examiner_idle.mp4
+        (muted-friendly, ~10–20s, the person sitting / gently moving)
+
+   MODE B (photoreal, optional): play a real talking video per question,
+     with the question spoken in the clip itself (perfect lip-sync).
+     => Set perQuestion:true, then add examiner_videos.json mapping the
+        EXACT question text to a file, e.g.
+        { "Tell me about yourself and how you got into marketing.":
+              "videos/mkt_r1_intro.mp4" }
+        Any question without a mapped clip automatically falls back to
+        the idle loop + TTS, so you can add clips a few at a time.
+   ========================================================================= */
+const EXAMINER = {
+  idle: "examiner_idle.mp4",        // looping presence clip (shown always)
+  perQuestion: false,               // set true once you have baked question clips
+  mapUrl: "examiner_videos.json"    // question-text -> clip-file map (optional)
+};
+
+(function(){const s=document.getElementById("stars");for(let i=0;i<34;i++){const d=document.createElement("div");d.className="star";d.style.left=Math.random()*100+"%";d.style.top=Math.random()*100+"%";d.style.animationDelay=(Math.random()*4)+"s";d.style.opacity=.2+Math.random()*.5;s.appendChild(d);}})();
+
+const vid=document.getElementById("examinerVideo");
+const wrap=document.getElementById("avatarWrap");
+const fb=document.getElementById("avatarFallback");
+let examinerReady=false;
+
+/* load the idle presence clip; gracefully fall back to the orb if missing */
+function loadExaminer(){
+  vid.muted=true;vid.loop=true;vid.setAttribute("playsinline","");
+  vid.src=EXAMINER.idle;
+  vid.onloadeddata=function(){examinerReady=true;vid.style.display="block";fb.style.display="none";vid.play().catch(function(){});};
+  vid.onerror=function(){examinerReady=false;vid.style.display="none";fb.style.display="flex";};
+  vid.load();
+  if(EXAMINER.perQuestion){
+    fetch(EXAMINER.mapUrl).then(function(r){return r.ok?r.json():{};}).then(function(m){state.videoMap=m||{};}).catch(function(){state.videoMap={};});
   }
 }
+function toIdle(){ /* return the video to the looping idle clip */
+  if(!examinerReady)return;
+  try{vid.pause();}catch(e){}
+  vid.loop=true;vid.muted=true;
+  if(vid.src.indexOf(EXAMINER.idle)===-1){vid.src=EXAMINER.idle;vid.load();}
+  vid.play().catch(function(){});
+}
+function setSpeaking(on){wrap.classList.toggle("speaking",on);if(on)wrap.classList.remove("listening");}
+function setListening(on){wrap.classList.toggle("listening",on);if(on)wrap.classList.remove("speaking");}
+
+const ROLES={marketing:{t:"Marketing",s:"Coordinator / Digital",ic:"📣"},data_analysis:{t:"Data Analysis",s:"Data / BI Analyst",ic:"📊"},ai_ml:{t:"AI / ML",s:"Data Scientist / MLE",ic:"🤖"}};
+const ROUNDS={round1:{t:"Round 1",s:"Recruiter screen",ic:"🤝"},round2:{t:"Round 2",s:"Behavioral",ic:"💬"},round3:{t:"Round 3",s:"Technical",ic:"🧩"}};
+const ACCENTS=[{k:"en-GB",t:"British",ic:"🇬🇧"},{k:"en-US",t:"American",ic:"🇺🇸"},{k:"en-AU",t:"Australian",ic:"🇦🇺"},{k:"en-IN",t:"Indian",ic:"🇮🇳"}];
+const state={bank:null,role:"marketing",round:"round1",minutes:20,accent:"en-GB",voice:null,intl:false,
+  questions:[],idx:0,answers:[],recognition:null,answering:false,ansStart:0,ansText:"",finished:false,videoMap:{}};
+
+fetch("interview_question_bank.json").then(r=>{if(!r.ok)throw 0;return r.json();}).then(b=>state.bank=b)
+  .catch(()=>setupStatus("Couldn't load interview_question_bank.json — upload it next to index.html.",true));
+
+function optBtn(ic,title,sub,pressed,onClick,group){const b=document.createElement("button");b.className="opt";b.dataset.group=group;b.setAttribute("aria-pressed",pressed);
+  b.innerHTML='<span class="ic">'+ic+'</span>'+title+'<small>'+sub+'</small>';
+  b.onclick=function(){document.querySelectorAll('.opt[data-group="'+group+'"]').forEach(function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");onClick();};return b;}
+function makeOptions(){
+  var rg=document.getElementById("roleGrid");Object.keys(ROLES).forEach(function(k){var v=ROLES[k];rg.appendChild(optBtn(v.ic,v.t,v.s,k===state.role,function(){state.role=k;refresh();},"role"));});
+  var ag=document.getElementById("accentGrid");ACCENTS.forEach(function(a){ag.appendChild(optBtn(a.ic,a.t,a.k,a.k===state.accent,function(){state.accent=a.k;pickVoice();refresh();},"accent"));});
+  var og=document.getElementById("roundGrid");Object.keys(ROUNDS).forEach(function(k){var v=ROUNDS[k];og.appendChild(optBtn(v.ic,v.t,v.s,k===state.round,function(){state.round=k;refresh();},"round"));});
+}
+function refresh(){var avg={round1:2.5,round2:3,round3:3.5}[state.round];var q=Math.max(1,Math.round(state.minutes/avg));document.getElementById("minsLabel").textContent=state.minutes+" min · ~"+q+" Q";}
+
+function loadVoices(){var v=speechSynthesis.getVoices().filter(function(x){return x.lang.startsWith("en");});var sel=document.getElementById("voiceSelect");
+  if(!v.length){sel.innerHTML="<option>No English voices</option>";return;}
+  sel.innerHTML="";v.forEach(function(x){var o=document.createElement("option");o.value=x.name;o.textContent=x.name+" ("+x.lang+")";sel.appendChild(o);});
+  sel.onchange=function(){state.voice=v.find(function(x){return x.name===sel.value;})||null;};window._voices=v;pickVoice();}
+function pickVoice(){var v=window._voices||[];var m=v.find(function(x){return x.lang.toLowerCase().startsWith(state.accent.toLowerCase());})||v.find(function(x){return x.lang.startsWith("en");});if(m){state.voice=m;var sel=document.getElementById("voiceSelect");if(sel)sel.value=m.name;}}
+speechSynthesis.onvoiceschanged=loadVoices;
+
+function buildInterview(){var pool=state.bank.roles[state.role][state.round].slice();
+  for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t;}
+  var avg=state.bank.config.avgMinutesPerQuestion[state.round];var n=Math.max(1,Math.round(state.minutes/avg));
+  var qs=pool.slice(0,n);
+  if(state.intl&&state.round==="round1"){var e=state.bank.international.slice().sort(function(){return Math.random()-0.5;}).slice(0,2);qs.splice(1,0,e[0],e[1]);}
+  return qs;}
+
+/* speak the question with browser TTS, over the looping idle face */
+function speakTTS(text){return new Promise(function(res){
+  var u=new SpeechSynthesisUtterance(text);if(state.voice)u.voice=state.voice;u.rate=0.98;
+  var done=function(){res();};u.onend=done;u.onerror=done;speechSynthesis.cancel();speechSynthesis.speak(u);});}
+
+/* MODE B: play a baked talking clip for this question (its own audio = the question) */
+function playQuestionClip(file){return new Promise(function(res){
+  if(!examinerReady){speakTTS(state.questions[state.idx]).then(res);return;}
+  vid.loop=false;vid.muted=false;vid.src=file;vid.load();
+  var finish=function(){vid.onended=null;vid.onerror=null;toIdle();res();};
+  vid.onended=finish;
+  vid.onerror=function(){vid.onended=null;vid.onerror=null;toIdle();speakTTS(state.questions[state.idx]).then(res);};
+  vid.play().catch(function(){vid.onerror&&vid.onerror();});});}
+
+function pickQuestionVideo(q){if(!EXAMINER.perQuestion)return null;var m=state.videoMap||{};return m[q]||m[(q||"").trim()]||null;}
+
+function askExaminer(text){var clip=pickQuestionVideo(text);
+  setSpeaking(true);
+  var p=clip?playQuestionClip(clip):speakTTS(text);
+  return p.then(function(){setSpeaking(false);});}
+
+function startInterview(){
+  if(!state.bank){setupStatus("Question bank not loaded yet.",true);return;}
+  state.intl=document.getElementById("intl").checked;
+  state.recognition=setupRecognition();
+  state.questions=buildInterview();state.idx=0;state.answers=[];state.finished=false;
+  document.getElementById("setup").style.display="none";
+  document.getElementById("report").style.display="none";
+  document.getElementById("stage").style.display="block";
+  loadExaminer();renderProgress();askCurrent();
+}
+function askCurrent(){
+  if(state.idx>=state.questions.length){finish();return;}
+  renderProgress();setListening(false);
+  var q=state.questions[state.idx];
+  var btn=document.getElementById("bigBtn");btn.disabled=true;btn.classList.remove("rec");btn.textContent="Examiner is asking…";
+  document.getElementById("askState").textContent="Listen to the question…";
+  document.getElementById("qText").textContent=q;
+  askExaminer(q).then(function(){document.getElementById("askState").textContent="Your turn";btn.disabled=false;btn.textContent="🎤 Press to answer";});
+}
+function setupRecognition(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;
+  var r=new SR();r.lang="en-US";r.interimResults=true;r.continuous=true;
+  r.onresult=function(e){var f="";for(var i=0;i<e.results.length;i++)if(e.results[i].isFinal)f+=e.results[i][0].transcript+" ";state.ansText=f.trim();};
+  r.onerror=function(){};return r;}
+function pressBig(){
+  if(state.finished)return;var btn=document.getElementById("bigBtn");
+  if(!state.answering){
+    state.answering=true;state.ansText="";state.ansStart=Date.now();
+    if(state.recognition){try{state.recognition.start();}catch(e){}}
+    setListening(true);
+    btn.classList.add("rec");btn.textContent="● Recording — press when finished";
+    document.getElementById("askState").textContent="Speak your answer…";
+  } else {
+    state.answering=false;if(state.recognition){try{state.recognition.stop();}catch(e){}}
+    setListening(false);
+    var secs=Math.round((Date.now()-state.ansStart)/1000);
+    setTimeout(function(){state.answers.push({q:state.questions[state.idx],a:state.ansText,secs:secs,words:state.ansText?state.ansText.split(/\s+/).filter(Boolean).length:0});
+      state.idx++;btn.classList.remove("rec");askCurrent();},300);
+  }
+}
+function renderProgress(){var p=document.getElementById("progress");p.innerHTML="";
+  state.questions.forEach(function(_,i){var d=document.createElement("div");d.className="dot"+(i<state.idx?" done":i===state.idx?" now":"");p.appendChild(d);});}
+
+function finish(){
+  state.finished=true;speechSynthesis.cancel();setSpeaking(false);setListening(false);try{vid.pause();}catch(e){}
+  if(state.recognition){try{state.recognition.stop();}catch(e){}}
+  document.getElementById("stage").style.display="none";document.getElementById("report").style.display="block";
+  document.getElementById("reportRole").textContent=ROLES[state.role].t+" · "+ROUNDS[state.round].t+" · "+state.answers.length+" questions answered";
+  var ans=state.answers,totalSecs=0,totalWords=0;ans.forEach(function(x){totalSecs+=x.secs;totalWords+=x.words;});
+  var avgSecs=ans.length?Math.round(totalSecs/ans.length):0,avgWords=ans.length?Math.round(totalWords/ans.length):0;
+  var fillers=["um","uh","like","you know","basically","actually","kind of","sort of"],fc=0;
+  ans.forEach(function(x){var t=(x.a||"").toLowerCase();fillers.forEach(function(f){fc+=(t.split(f).length-1);});});
+  document.getElementById("statgrid").innerHTML='<div class="stat"><b>'+ans.length+'</b><small>questions</small></div><div class="stat"><b>'+avgSecs+'s</b><small>avg answer</small></div><div class="stat"><b>'+avgWords+'</b><small>avg words</small></div>';
+  var tips=[];
+  if(avgSecs&&avgSecs<35)tips.push("Your answers were quite short. Aim for 60–90 seconds and use the STAR structure (Situation, Task, Action, Result).");
+  if(avgSecs>150)tips.push("Some answers ran long. Practise getting to the point in the first sentence, then one clear example.");
+  if(fc>=5)tips.push("You used filler words about "+fc+" times (um, like, you know…). A short pause sounds more confident.");
+  if(avgSecs>=35&&avgSecs<=150&&fc<5)tips.push("Good pacing and clarity. Keep practising with fresh random questions.");
+  tips.push("Re-read your answers below and rewrite one — turning a rough spoken answer into a polished one is the fastest way to improve.");
+  document.getElementById("tips").innerHTML=tips.map(function(t){return '<div class="fb">💡 '+t+'</div>';}).join("");
+  document.getElementById("qaList").innerHTML=ans.map(function(x,i){return '<div class="qa"><div class="q">Q'+(i+1)+'. '+x.q+'</div><div class="a">'+(x.a?x.a:"<i>(no words captured)</i>")+' · '+x.secs+'s</div></div>';}).join("");
+}
+
+document.getElementById("mins").addEventListener("input",function(e){state.minutes=+e.target.value;refresh();});
+document.getElementById("startBtn").addEventListener("click",startInterview);
+document.getElementById("bigBtn").addEventListener("click",pressBig);
+document.getElementById("repeatBtn").addEventListener("click",function(){if(!state.finished&&!state.answering&&state.idx<state.questions.length)askCurrent();});
+document.getElementById("endBtn").addEventListener("click",function(){if(!state.finished)finish();});
+document.getElementById("againBtn").addEventListener("click",function(){document.getElementById("report").style.display="none";document.getElementById("setup").style.display="block";});
+function setupStatus(m,e){var s=document.getElementById("setupStatus");s.textContent=m;s.className="status"+(e?" err":" ok");}
+makeOptions();refresh();loadVoices();
+</script>
+</body>
+</html>
