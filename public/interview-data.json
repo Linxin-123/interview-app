@@ -1,0 +1,1354 @@
+{
+  "_readme": "Edit this file to update the app; refresh the page (no rebuild). roles[].id and questions[].role must match; round is 1/2/3. 'model' is the live 3D avatar. Default 'models/face.glb' is bundled and needs NO internet. To use your own Ready Player Me avatar instead, put the full https URL here ending in .glb and keep '?morphTargets=ARKit,Oculus Visemes'. Set model to \"\" to use the photo.",
+  "roles": [
+    {
+      "id": "marketing",
+      "title": "Marketing",
+      "subTitle": "Coordinator / Digital",
+      "icon": "📢",
+      "description": "Covers global brand positioning, performance marketing metrics (ROI, CTR), conversion funnels, and localization."
+    },
+    {
+      "id": "data_analysis",
+      "title": "Data Analysis",
+      "subTitle": "Data / BI Analyst",
+      "icon": "📊",
+      "description": "Covers SQL performance tuning, dashboard storytelling, business intelligence modeling, and explaining metrics to partners."
+    },
+    {
+      "id": "ai_ml",
+      "title": "AI / ML",
+      "subTitle": "Data Scientist / MLE",
+      "icon": "🤖",
+      "description": "Covers training pipelines, LLM fine-tuning, retrieval-augmented generation (RAG), and cost-performance trade-offs."
+    }
+  ],
+  "interviewers": [
+    {
+      "id": "david",
+      "name": "David",
+      "role": "Senior Hiring Recruiter",
+      "image": "images/interviewer_david.jpg",
+      "accent": "en-GB",
+      "gender": "male",
+      "voiceHints": [
+        "google uk english male",
+        "microsoft george",
+        "microsoft ryan",
+        "arthur",
+        "daniel",
+        "oliver",
+        "uk english male"
+      ],
+      "description": "Warm, encouraging, and clear. Great for behavioural narratives and first screens.",
+      "model": "",
+      "video": "videos/david.mp4",
+      "videoListening": "videos/david_listening.mp4"
+    },
+    {
+      "id": "sora",
+      "name": "Sora",
+      "role": "VP of Product & Strategy",
+      "image": "images/interviewer_sophia.jpg",
+      "accent": "en-US",
+      "gender": "female",
+      "voiceHints": [
+        "google us english",
+        "microsoft aria",
+        "microsoft jenny",
+        "microsoft zira",
+        "samantha",
+        "jenny",
+        "aria",
+        "us english female"
+      ],
+      "description": "Structured, analytical, and supportive. Focuses on problem-solving and leadership.",
+      "model": "",
+      "video": "videos/sora.mp4",
+      "videoListening": "videos/sora_listening.mp4"
+    },
+    {
+      "id": "ethan",
+      "name": "Ethan",
+      "role": "AI Infrastructure Lead",
+      "image": "images/interviewer_ethan.jpg",
+      "accent": "en-US",
+      "gender": "male",
+      "voiceHints": [
+        "microsoft guy",
+        "microsoft mark",
+        "microsoft david",
+        "google australian",
+        "daniel",
+        "alex",
+        "us english male"
+      ],
+      "description": "Technical, forward-thinking, and friendly. Best for system design and deep dives.",
+      "model": "",
+      "video": "videos/ethan.mp4",
+      "videoListening": "videos/ethan_listening.mp4"
+    }
+  ],
+  "questions": [
+    {
+      "id": "m1_1",
+      "role": "marketing",
+      "round": 1,
+      "text": "Could you introduce yourself and walk me through a successful digital campaign you led recently?",
+      "scenario": "Tell me about yourself & Campaign walk-through"
+    },
+    {
+      "id": "m1_2",
+      "role": "marketing",
+      "round": 1,
+      "text": "Why are you interested in our global marketing position, and how do you think your past experience aligns?",
+      "scenario": "Motivation & Role alignment"
+    },
+    {
+      "id": "m1_3",
+      "role": "marketing",
+      "round": 1,
+      "text": "How do you structure your campaign planning from initial goal setting to final launch?",
+      "scenario": "Campaign planning workflow"
+    },
+    {
+      "id": "m1_4",
+      "role": "marketing",
+      "round": 1,
+      "text": "Describe a time you worked with an international team. How did you coordinate with them?",
+      "scenario": "Cross-border communication & Teamwork"
+    },
+    {
+      "id": "m1_5",
+      "role": "marketing",
+      "round": 1,
+      "text": "What digital marketing metrics do you check first thing in the morning, and why?",
+      "scenario": "Data curiosity & Core analytics KPIs"
+    },
+    {
+      "id": "m1_6",
+      "role": "marketing",
+      "round": 1,
+      "text": "How do you adapt your marketing messages when launching in a completely new international market?",
+      "scenario": "Global localization & Messaging adaptation"
+    },
+    {
+      "id": "m1_7",
+      "role": "marketing",
+      "round": 1,
+      "text": "Tell me about a time you had to learn a new marketing tool or channel quickly. How did you approach it?",
+      "scenario": "Rapid tool adaptation & Learning agility"
+    },
+    {
+      "id": "m1_8",
+      "role": "marketing",
+      "round": 1,
+      "text": "How do you handle feedback from senior executives who want to change your creative assets at the last minute?",
+      "scenario": "Handling executive pushback under pressure"
+    },
+    {
+      "id": "m2_1",
+      "role": "marketing",
+      "round": 2,
+      "text": "Imagine client acquisition cost (CAC) jumped 35% last month while conversions dropped. What steps do you take to audit?",
+      "scenario": "Funnel drop-off audit & Funnel optimization"
+    },
+    {
+      "id": "m2_2",
+      "role": "marketing",
+      "round": 2,
+      "text": "How would you launch a new B2B product on a tight $10,000 budget?",
+      "scenario": "Bootstrapping & High-impact growth hacking"
+    },
+    {
+      "id": "m2_3",
+      "role": "marketing",
+      "round": 2,
+      "text": "Tell me about a campaign you ran that did not meet its target. What did you learn?",
+      "scenario": "Post-mortem analysis & Resiliency"
+    },
+    {
+      "id": "m2_4",
+      "role": "marketing",
+      "round": 2,
+      "text": "How do you design and prioritize creative content ideas for different social media platforms?",
+      "scenario": "Content strategy & Platform segmentation"
+    },
+    {
+      "id": "m2_5",
+      "role": "marketing",
+      "round": 2,
+      "text": "How do you leverage SEO and organic search to drive long-term traffic sustainability?",
+      "scenario": "Organic growth & Content optimization"
+    },
+    {
+      "id": "m2_6",
+      "role": "marketing",
+      "round": 2,
+      "text": "How do you evaluate and collaborate with key influencers (KOLs) to maximize ROI?",
+      "scenario": "KOL evaluation & Campaign performance assessment"
+    },
+    {
+      "id": "m2_7",
+      "role": "marketing",
+      "round": 2,
+      "text": "Describe a project where you successfully used marketing automation to nurture cold leads into active buyers.",
+      "scenario": "Marketing automation & Lead nurturing systems"
+    },
+    {
+      "id": "m2_8",
+      "role": "marketing",
+      "round": 2,
+      "text": "How do you design an A/B test for landing page headlines, and what metrics determine the true winner?",
+      "scenario": "Conversion rate optimization (CRO) & A/B testing"
+    },
+    {
+      "id": "m3_1",
+      "role": "marketing",
+      "round": 3,
+      "text": "You disagree with the engineering team on product positioning. How do you resolve this conflict?",
+      "scenario": "Cross-functional alignment & Constructive persuasion"
+    },
+    {
+      "id": "m3_2",
+      "role": "marketing",
+      "round": 3,
+      "text": "Our competitor launches a feature matching ours tomorrow. How do you adjust our marketing campaign overnight?",
+      "scenario": "Agility & Under-pressure campaign adjustments"
+    },
+    {
+      "id": "m3_3",
+      "role": "marketing",
+      "round": 3,
+      "text": "How do you justify your marketing budget request to the CFO who only values short-term sales metrics?",
+      "scenario": "ROI justification & Executive stakeholder management"
+    },
+    {
+      "id": "m3_4",
+      "role": "marketing",
+      "round": 3,
+      "text": "Where do you see digital marketing evolving with generative AI over the next three years?",
+      "scenario": "Future marketing vision & Tech-savviness"
+    },
+    {
+      "id": "m3_5",
+      "role": "marketing",
+      "round": 3,
+      "text": "How do you measure brand equity and brand awareness during a massive brand transformation campaign?",
+      "scenario": "Brand transformation metrics & Sophisticated auditing"
+    },
+    {
+      "id": "m3_6",
+      "role": "marketing",
+      "round": 3,
+      "text": "How would you devise a digital marketing recovery strategy for a product suffering from a sudden public relations crisis?",
+      "scenario": "Crisis marketing & Brand reputation rebuilding"
+    },
+    {
+      "id": "m3_7",
+      "role": "marketing",
+      "round": 3,
+      "text": "If our target customer acquisition channel becomes fully saturated, how do you discover and validate the next growth channel?",
+      "scenario": "Channel saturation & Growth exploratory strategy"
+    },
+    {
+      "id": "m3_8",
+      "role": "marketing",
+      "round": 3,
+      "text": "How do you establish attribution models across complex multi-touch campaigns to correctly allocate spend?",
+      "scenario": "Multi-touch attribution (MTA) & Budget allocation modeling"
+    },
+    {
+      "id": "d1_1",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Can you introduce yourself and describe how your data insights have directly driven business decisions or growth?",
+      "scenario": "Data storytelling & Value metric focus"
+    },
+    {
+      "id": "d1_2",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "What tools and programming languages do you prefer for data analysis, and what is your process for data cleaning?",
+      "scenario": "Analytical stack & Data preparation pipeline"
+    },
+    {
+      "id": "d1_3",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Tell me about a complex dashboard you built. Who were the users, and how did it change their daily operations?",
+      "scenario": "Dashboard architecture & Business utility"
+    },
+    {
+      "id": "d1_4",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "How do you handle incomplete or highly noisy data when tasked with urgent reporting requirements?",
+      "scenario": "Data cleaning under pressure"
+    },
+    {
+      "id": "d1_5",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Explain the difference between a join and a subquery in SQL, and when would you optimize one over the other?",
+      "scenario": "SQL fundamentals & Core optimization skills"
+    },
+    {
+      "id": "d1_6",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "How do you ensure your metrics definitions are consistent across different business departments?",
+      "scenario": "Metrics standardization & Communication alignment"
+    },
+    {
+      "id": "d1_7",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Describe how you balance detail-oriented documentation with rapid speed of analysis delivery.",
+      "scenario": "Documentation standards & Delivery trade-offs"
+    },
+    {
+      "id": "d1_8",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "What is your strategy for communicating highly technical data concepts to absolute beginners in sales?",
+      "scenario": "Simplified tech communication & Stakeholder education"
+    },
+    {
+      "id": "d2_1",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "We see a sudden 15% drop in weekly active users (WAU) on our platform. Walk me through your diagnostics.",
+      "scenario": "Anomalies debugging & Traffic root-cause analysis"
+    },
+    {
+      "id": "d2_2",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "How do you set up an A/B test? How would you explain statistical significance to a non-technical sales manager?",
+      "scenario": "A/B testing methodology & Stakeholder translations"
+    },
+    {
+      "id": "d2_3",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Describe a situation where your analysis disproved a popular assumption held by management. How did you share this?",
+      "scenario": "Scientific rigor & Diplomacy when delivering bad news"
+    },
+    {
+      "id": "d2_4",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "How do you define and measure cohort retention, and why is it more critical than raw registration numbers?",
+      "scenario": "Cohort retention & Lifetime customer value"
+    },
+    {
+      "id": "d2_5",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "How do you handle multiple conflicting ad-hoc data requests from marketing, operations, and executives?",
+      "scenario": "Prioritization strategy & Queue management"
+    },
+    {
+      "id": "d2_6",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "What are SQL Window Functions? Can you share a real scenario where you used them for complex sorting or running totals?",
+      "scenario": "SQL Window Functions & Advanced data queries"
+    },
+    {
+      "id": "d2_7",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Tell me about how you analyze the user journey and drop-off rates across a complex registration funnel.",
+      "scenario": "Funnel analytics & Drop-off diagnostics"
+    },
+    {
+      "id": "d2_8",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "How do you distinguish between correlation and causation in your everyday data analysis reports?",
+      "scenario": "Causal inference & Rigorous statistics"
+    },
+    {
+      "id": "d3_1",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How do you maintain data governance, quality, and single-source-of-truth in a rapidly scaling company?",
+      "scenario": "Data governance & Quality frameworks"
+    },
+    {
+      "id": "d3_2",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Walk me through how you would model and predict customer churn using basic logistic models or exploratory analytics.",
+      "scenario": "Churn prediction modeling & Exploratory analytics"
+    },
+    {
+      "id": "d3_3",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "What is your strategy for choosing which data warehousing tool (e.g. BigQuery, Snowflake, Redshift) is best for a team?",
+      "scenario": "Data architecture selection & Budget constraint balancing"
+    },
+    {
+      "id": "d3_4",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "What are the ethical implications of data collection and targeted advertising that an analyst must always guard against?",
+      "scenario": "Data ethics & Privacy policies (GDPR/CCPA)"
+    },
+    {
+      "id": "d3_5",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Can you give an example of how you used external macroeconomic data to enrich your internal consumer reports?",
+      "scenario": "Macroeconomic analysis & Data enrichment"
+    },
+    {
+      "id": "d3_6",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How do you approach designing a brand new data mart or schema structure from scratch for a new business line?",
+      "scenario": "Data modeling & Schema design best practices"
+    },
+    {
+      "id": "d3_7",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "If our tracking scripts fail and we lose key transactional data for 2 days, how would you mathematically impute the missing data?",
+      "scenario": "Missing data imputation & Advanced statistical estimation"
+    },
+    {
+      "id": "d3_8",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How do you evaluate whether we should purchase a premium third-party BI platform versus building custom visualization tools in-house?",
+      "scenario": "Make-vs-Buy visualization suite assessment"
+    },
+    {
+      "id": "a1_1",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Can you introduce yourself and walk me through a machine learning pipeline you designed for production?",
+      "scenario": "ML pipeline overview & Production engineering"
+    },
+    {
+      "id": "a1_2",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "How do you stay updated with rapid advances in LLMs, deep learning models, and research papers?",
+      "scenario": "Lifelong tech learning & Paper research habits"
+    },
+    {
+      "id": "a1_3",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Explain the difference between bias and variance, and describe the specific methods you use to diagnose overfitting.",
+      "scenario": "ML fundamentals & Overfitting diagnostics"
+    },
+    {
+      "id": "a1_4",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "What is your favorite deep learning framework (e.g., PyTorch, TensorFlow) and why is it your tool of choice?",
+      "scenario": "ML stack selection & Engineering trade-offs"
+    },
+    {
+      "id": "a1_5",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Describe a time you collaborated with software engineers to integrate your ML models into an existing application microservice.",
+      "scenario": "Cross-functional engineering & Model serving integration"
+    },
+    {
+      "id": "a1_6",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "How do you explain a complex model prediction (like deep neural networks) to non-technical business partners?",
+      "scenario": "Model explainability & SHAP/LIME communication"
+    },
+    {
+      "id": "a1_7",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "What are your preferred tools and methodologies for data labeling and ensuring label quality in massive datasets?",
+      "scenario": "Data labeling operations & QA pipelines"
+    },
+    {
+      "id": "a1_8",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Describe a situation where a simple heuristic or baseline outperformed a complex ML model. How did you react?",
+      "scenario": "Baseline models & Occam's razor application"
+    },
+    {
+      "id": "a2_1",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "We need to build a customer service agent using LLMs but have very limited labeled data. What tuning or RAG pipeline would you recommend?",
+      "scenario": "LLMs fine-tuning strategy & Retrieval-augmented generation design"
+    },
+    {
+      "id": "a2_2",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Our recommendation system is experiencing high latency of 300ms causing drops in conversion. How do you optimize inference speed?",
+      "scenario": "Inference latency optimization & Quantization / Distillation"
+    },
+    {
+      "id": "a2_3",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "How do you handle data drift or concept drift in production models, and how do you set up automatic retraining triggers?",
+      "scenario": "MLOps & Active model monitoring / retraining pipelines"
+    },
+    {
+      "id": "a2_4",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Describe how you would design a training dataset to minimize demographic bias in a global image processing or sentiment model.",
+      "scenario": "Algorithmic fairness & Bias mitigation in training data"
+    },
+    {
+      "id": "a2_5",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "How do you design validation splits for timeseries forecasting to avoid future data leakage during offline training?",
+      "scenario": "Timeseries validation & Temporal leakage prevention"
+    },
+    {
+      "id": "a2_6",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Can you compare fine-tuning an LLM using LoRA versus prompting it with standard RAG? What are the resource and performance trade-offs?",
+      "scenario": "LoRA fine-tuning vs. RAG architectural comparison"
+    },
+    {
+      "id": "a2_7",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "How do you debug an active neural network training process when loss values suddenly diverge or hit NaN?",
+      "scenario": "Gradient explosion diagnostics & NaN debugging"
+    },
+    {
+      "id": "a2_8",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "What embedding models and vector indexing algorithms (like HNSW or IVF-PQ) would you select for a billion-scale similarity search?",
+      "scenario": "Vector database selection & Huge index optimization"
+    },
+    {
+      "id": "a3_1",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Describe a time when your ML model performed perfectly in training but completely failed in production. How did you diagnose and patch it?",
+      "scenario": "Training-serving skew & Production incident response"
+    },
+    {
+      "id": "a3_2",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Advanced LLM training needs high GPU costs. If the engineering leadership rejects your architecture due to budget constraints, how do you handle it?",
+      "scenario": "Cost-sensitive engineering & Lightweight parameter-efficient tuning"
+    },
+    {
+      "id": "a3_3",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How do you evaluate the reliability and alignment of a generative AI feature before rolling it out to million active users?",
+      "scenario": "GenAI evaluation benchmarks, red-teaming, & Safe rollouts"
+    },
+    {
+      "id": "a3_4",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Should we build our proprietary models or consume hosted APIs (e.g. Anthropic, OpenAI, Gemini)? Walk me through your decision framework.",
+      "scenario": "Make-vs-Buy architectural analysis for Enterprise AI"
+    },
+    {
+      "id": "a3_5",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Explain how attention mechanism works in simple terms, as if you were explaining it to our product manager.",
+      "scenario": "Explaining complex mathematical concepts with supreme simplicity"
+    },
+    {
+      "id": "a3_6",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "What is your strategy for implementing continuous integration and continuous deployment (CI/CD) for complex machine learning models?",
+      "scenario": "Continuous ML delivery (CD4ML) & Automated tests"
+    },
+    {
+      "id": "a3_7",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How do you design an evaluation pipeline to measure Hallucination rate in a customer-facing RAG application?",
+      "scenario": "Hallucination assessment & Real-time validation metrics"
+    },
+    {
+      "id": "a3_8",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Describe how distributed model training strategies like ZeRO (Zero Redundancy Optimizer) optimize memory footprint across multi-node clusters.",
+      "scenario": "Distributed Deep Learning & Parallelization strategies"
+    },
+    {
+      "id": "m1_x100",
+      "role": "marketing",
+      "round": 1,
+      "text": "What first drew you to marketing, and which channel do you feel strongest in?",
+      "scenario": "Motivation & core channel"
+    },
+    {
+      "id": "m1_x101",
+      "role": "marketing",
+      "round": 1,
+      "text": "Walk me through a campaign you're most proud of and the results it drove.",
+      "scenario": "Signature campaign"
+    },
+    {
+      "id": "m1_x102",
+      "role": "marketing",
+      "round": 1,
+      "text": "How do you stay current with fast-changing marketing platforms and trends?",
+      "scenario": "Staying current"
+    },
+    {
+      "id": "m1_x103",
+      "role": "marketing",
+      "round": 1,
+      "text": "Which marketing metrics do you look at first, and why?",
+      "scenario": "Key metrics"
+    },
+    {
+      "id": "m1_x104",
+      "role": "marketing",
+      "round": 1,
+      "text": "Describe your experience with paid social versus organic growth.",
+      "scenario": "Paid vs organic"
+    },
+    {
+      "id": "m1_x105",
+      "role": "marketing",
+      "round": 1,
+      "text": "How do you define and measure a campaign's ROI?",
+      "scenario": "ROI definition"
+    },
+    {
+      "id": "m1_x106",
+      "role": "marketing",
+      "round": 1,
+      "text": "Tell me about a time your campaign underperformed. What did you learn?",
+      "scenario": "Learning from failure"
+    },
+    {
+      "id": "m1_x107",
+      "role": "marketing",
+      "round": 1,
+      "text": "How do you decide where to allocate a limited marketing budget?",
+      "scenario": "Budget allocation"
+    },
+    {
+      "id": "m1_x108",
+      "role": "marketing",
+      "round": 1,
+      "text": "What tools do you rely on day to day, and how do you use them?",
+      "scenario": "Tooling"
+    },
+    {
+      "id": "m1_x109",
+      "role": "marketing",
+      "round": 1,
+      "text": "How would you describe our brand's current positioning to a friend?",
+      "scenario": "Brand understanding"
+    },
+    {
+      "id": "m1_x110",
+      "role": "marketing",
+      "round": 1,
+      "text": "What's a marketing trend you think is overhyped, and why?",
+      "scenario": "Critical thinking"
+    },
+    {
+      "id": "m1_x111",
+      "role": "marketing",
+      "round": 1,
+      "text": "Where do you see the biggest growth opportunity for a brand like ours?",
+      "scenario": "Growth opportunity"
+    },
+    {
+      "id": "m2_x100",
+      "role": "marketing",
+      "round": 2,
+      "text": "Tell me about a time you disagreed with a stakeholder on creative direction.",
+      "scenario": "Creative disagreement"
+    },
+    {
+      "id": "m2_x101",
+      "role": "marketing",
+      "round": 2,
+      "text": "Describe a situation where you had to launch under a very tight deadline.",
+      "scenario": "Tight deadline"
+    },
+    {
+      "id": "m2_x102",
+      "role": "marketing",
+      "round": 2,
+      "text": "Give an example of a data insight that changed your campaign strategy.",
+      "scenario": "Data-driven pivot"
+    },
+    {
+      "id": "m2_x103",
+      "role": "marketing",
+      "round": 2,
+      "text": "Tell me about a time you had to influence a team without formal authority.",
+      "scenario": "Influence without authority"
+    },
+    {
+      "id": "m2_x104",
+      "role": "marketing",
+      "round": 2,
+      "text": "Describe a moment when a campaign went viral or exceeded expectations.",
+      "scenario": "Unexpected success"
+    },
+    {
+      "id": "m2_x105",
+      "role": "marketing",
+      "round": 2,
+      "text": "How did you handle a time when results and leadership's opinion conflicted?",
+      "scenario": "Data vs opinion"
+    },
+    {
+      "id": "m2_x106",
+      "role": "marketing",
+      "round": 2,
+      "text": "Tell me about juggling multiple campaigns at once. How did you prioritize?",
+      "scenario": "Prioritization"
+    },
+    {
+      "id": "m2_x107",
+      "role": "marketing",
+      "round": 2,
+      "text": "Describe a time you turned a negative customer sentiment around.",
+      "scenario": "Reputation recovery"
+    },
+    {
+      "id": "m2_x108",
+      "role": "marketing",
+      "round": 2,
+      "text": "Give an example of collaborating with sales or product on a launch.",
+      "scenario": "Cross-functional launch"
+    },
+    {
+      "id": "m2_x109",
+      "role": "marketing",
+      "round": 2,
+      "text": "Tell me about a time you had to cut a project you believed in.",
+      "scenario": "Hard trade-off"
+    },
+    {
+      "id": "m2_x110",
+      "role": "marketing",
+      "round": 2,
+      "text": "Describe feedback that was hard to hear but made your work better.",
+      "scenario": "Receiving feedback"
+    },
+    {
+      "id": "m2_x111",
+      "role": "marketing",
+      "round": 2,
+      "text": "Tell me about mentoring a junior teammate on a campaign.",
+      "scenario": "Mentoring"
+    },
+    {
+      "id": "m3_x100",
+      "role": "marketing",
+      "round": 3,
+      "text": "How would you structure an A/B test for a new landing page?",
+      "scenario": "A/B testing"
+    },
+    {
+      "id": "m3_x101",
+      "role": "marketing",
+      "round": 3,
+      "text": "Walk me through building a multi-channel attribution model.",
+      "scenario": "Attribution"
+    },
+    {
+      "id": "m3_x102",
+      "role": "marketing",
+      "round": 3,
+      "text": "How do you segment an audience for a personalized campaign?",
+      "scenario": "Segmentation"
+    },
+    {
+      "id": "m3_x103",
+      "role": "marketing",
+      "round": 3,
+      "text": "Explain how you'd set up a conversion funnel and find the drop-off point.",
+      "scenario": "Funnel analysis"
+    },
+    {
+      "id": "m3_x104",
+      "role": "marketing",
+      "round": 3,
+      "text": "How would you forecast the impact of doubling ad spend?",
+      "scenario": "Spend forecasting"
+    },
+    {
+      "id": "m3_x105",
+      "role": "marketing",
+      "round": 3,
+      "text": "Describe your approach to SEO for a brand-new product page.",
+      "scenario": "SEO strategy"
+    },
+    {
+      "id": "m3_x106",
+      "role": "marketing",
+      "round": 3,
+      "text": "How do you decide statistical significance before ending a test?",
+      "scenario": "Significance"
+    },
+    {
+      "id": "m3_x107",
+      "role": "marketing",
+      "round": 3,
+      "text": "Explain how you'd measure incrementality of a campaign.",
+      "scenario": "Incrementality"
+    },
+    {
+      "id": "m3_x108",
+      "role": "marketing",
+      "round": 3,
+      "text": "How would you build a lifecycle email automation from scratch?",
+      "scenario": "Lifecycle automation"
+    },
+    {
+      "id": "m3_x109",
+      "role": "marketing",
+      "round": 3,
+      "text": "Walk me through diagnosing a sudden drop in organic traffic.",
+      "scenario": "Traffic drop diagnosis"
+    },
+    {
+      "id": "m3_x110",
+      "role": "marketing",
+      "round": 3,
+      "text": "How would you use a CDP or analytics stack to unify customer data?",
+      "scenario": "Data unification"
+    },
+    {
+      "id": "m3_x111",
+      "role": "marketing",
+      "round": 3,
+      "text": "Explain how you'd localize a campaign for a new international market.",
+      "scenario": "Localization"
+    },
+    {
+      "id": "d1_x100",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "What got you into data analysis, and which tools are your strongest?",
+      "scenario": "Motivation & tools"
+    },
+    {
+      "id": "d1_x101",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Walk me through an analysis that led to a real business decision.",
+      "scenario": "Impactful analysis"
+    },
+    {
+      "id": "d1_x102",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "How comfortable are you with SQL, and how do you use it day to day?",
+      "scenario": "SQL comfort"
+    },
+    {
+      "id": "d1_x103",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Describe your experience turning messy data into a clear story.",
+      "scenario": "Data storytelling"
+    },
+    {
+      "id": "d1_x104",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Which visualization tools do you prefer, and why?",
+      "scenario": "Viz tools"
+    },
+    {
+      "id": "d1_x105",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "How do you make sure a dashboard actually gets used by stakeholders?",
+      "scenario": "Dashboard adoption"
+    },
+    {
+      "id": "d1_x106",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Tell me about a dataset you found particularly challenging to work with.",
+      "scenario": "Challenging data"
+    },
+    {
+      "id": "d1_x107",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "How do you validate that your results are correct before sharing them?",
+      "scenario": "Validation"
+    },
+    {
+      "id": "d1_x108",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "What's the difference between correlation and causation in your work?",
+      "scenario": "Correlation vs causation"
+    },
+    {
+      "id": "d1_x109",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "How do you prioritize competing data requests from different teams?",
+      "scenario": "Request prioritization"
+    },
+    {
+      "id": "d1_x110",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "Describe how you'd explain a complex result to a non-technical audience.",
+      "scenario": "Explaining to non-technical"
+    },
+    {
+      "id": "d1_x111",
+      "role": "data_analysis",
+      "round": 1,
+      "text": "What metrics would you track for a subscription business?",
+      "scenario": "Business metrics"
+    },
+    {
+      "id": "d2_x100",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Tell me about a time your analysis contradicted what leadership expected.",
+      "scenario": "Contradicting expectations"
+    },
+    {
+      "id": "d2_x101",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Describe a deadline where you had to deliver an analysis fast.",
+      "scenario": "Fast turnaround"
+    },
+    {
+      "id": "d2_x102",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Give an example of catching a critical error in someone else's work.",
+      "scenario": "Catching errors"
+    },
+    {
+      "id": "d2_x103",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Tell me about influencing a decision purely with data.",
+      "scenario": "Data influence"
+    },
+    {
+      "id": "d2_x104",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Describe collaborating with engineers to get the data you needed.",
+      "scenario": "Cross-team data"
+    },
+    {
+      "id": "d2_x105",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Tell me about a time your recommendation was ignored. What happened?",
+      "scenario": "Ignored recommendation"
+    },
+    {
+      "id": "d2_x106",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Describe balancing speed and accuracy under pressure.",
+      "scenario": "Speed vs accuracy"
+    },
+    {
+      "id": "d2_x107",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Give an example of automating a repetitive analysis task.",
+      "scenario": "Automation"
+    },
+    {
+      "id": "d2_x108",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Tell me about presenting bad news backed by data.",
+      "scenario": "Delivering bad news"
+    },
+    {
+      "id": "d2_x109",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Describe a time you had to learn a new tool quickly for a project.",
+      "scenario": "Learning fast"
+    },
+    {
+      "id": "d2_x110",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Tell me about a project with ambiguous or shifting requirements.",
+      "scenario": "Ambiguity"
+    },
+    {
+      "id": "d2_x111",
+      "role": "data_analysis",
+      "round": 2,
+      "text": "Describe mentoring someone on good analytical practices.",
+      "scenario": "Mentoring"
+    },
+    {
+      "id": "d3_x100",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How would you design a query to find the top customers by revenue trend?",
+      "scenario": "SQL design"
+    },
+    {
+      "id": "d3_x101",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Explain how you'd detect and handle outliers in a dataset.",
+      "scenario": "Outliers"
+    },
+    {
+      "id": "d3_x102",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Walk me through choosing between a t-test and a chi-square test.",
+      "scenario": "Test selection"
+    },
+    {
+      "id": "d3_x103",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How would you build a churn prediction from raw event data?",
+      "scenario": "Churn modeling"
+    },
+    {
+      "id": "d3_x104",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Explain how you'd handle missing data in an important column.",
+      "scenario": "Missing data"
+    },
+    {
+      "id": "d3_x105",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How do you design a metric to be robust against gaming?",
+      "scenario": "Robust metrics"
+    },
+    {
+      "id": "d3_x106",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Walk me through normalizing a messy multi-source dataset.",
+      "scenario": "Normalization"
+    },
+    {
+      "id": "d3_x107",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How would you measure whether a product change actually worked?",
+      "scenario": "Causal measurement"
+    },
+    {
+      "id": "d3_x108",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Explain the bias-variance trade-off in simple terms.",
+      "scenario": "Bias-variance"
+    },
+    {
+      "id": "d3_x109",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How would you set up an experiment with a control and treatment group?",
+      "scenario": "Experiment design"
+    },
+    {
+      "id": "d3_x110",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "Walk me through diagnosing why a dashboard number suddenly spiked.",
+      "scenario": "Anomaly diagnosis"
+    },
+    {
+      "id": "d3_x111",
+      "role": "data_analysis",
+      "round": 3,
+      "text": "How would you communicate uncertainty in a forecast to executives?",
+      "scenario": "Communicating uncertainty"
+    },
+    {
+      "id": "a1_x100",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "What drew you to machine learning, and what's your strongest area?",
+      "scenario": "Motivation & strength"
+    },
+    {
+      "id": "a1_x101",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Walk me through an ML project you shipped end to end.",
+      "scenario": "End-to-end project"
+    },
+    {
+      "id": "a1_x102",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Which frameworks and languages do you use most, and why?",
+      "scenario": "Tooling"
+    },
+    {
+      "id": "a1_x103",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "How do you stay up to date in such a fast-moving field?",
+      "scenario": "Staying current"
+    },
+    {
+      "id": "a1_x104",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Describe a model you built and the impact it had.",
+      "scenario": "Impactful model"
+    },
+    {
+      "id": "a1_x105",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "How do you decide whether a problem even needs ML?",
+      "scenario": "ML vs rules"
+    },
+    {
+      "id": "a1_x106",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "What's your experience moving a model from notebook to production?",
+      "scenario": "Productionization"
+    },
+    {
+      "id": "a1_x107",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "How do you explain a model's decision to a non-technical stakeholder?",
+      "scenario": "Explainability"
+    },
+    {
+      "id": "a1_x108",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Tell me about a dataset issue that shaped your whole approach.",
+      "scenario": "Data-first thinking"
+    },
+    {
+      "id": "a1_x109",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "Which evaluation metrics do you reach for, and when?",
+      "scenario": "Metrics"
+    },
+    {
+      "id": "a1_x110",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "How do you think about the cost and latency of a model in production?",
+      "scenario": "Cost & latency"
+    },
+    {
+      "id": "a1_x111",
+      "role": "ai_ml",
+      "round": 1,
+      "text": "What's an ML trend you're excited or skeptical about right now?",
+      "scenario": "Field opinion"
+    },
+    {
+      "id": "a2_x100",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Tell me about a model that failed in production. What did you do?",
+      "scenario": "Production failure"
+    },
+    {
+      "id": "a2_x101",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Describe a time you had to ship under a tight research deadline.",
+      "scenario": "Deadline pressure"
+    },
+    {
+      "id": "a2_x102",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Give an example of simplifying a model to make it deployable.",
+      "scenario": "Simplification"
+    },
+    {
+      "id": "a2_x103",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Tell me about convincing stakeholders to trust a model's output.",
+      "scenario": "Building trust"
+    },
+    {
+      "id": "a2_x104",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Describe collaborating with data engineers on a pipeline.",
+      "scenario": "Pipeline collaboration"
+    },
+    {
+      "id": "a2_x105",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Tell me about a time your model was biased. How did you address it?",
+      "scenario": "Bias handling"
+    },
+    {
+      "id": "a2_x106",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Describe balancing model accuracy against interpretability.",
+      "scenario": "Accuracy vs interpretability"
+    },
+    {
+      "id": "a2_x107",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Give an example of debugging a model that silently degraded.",
+      "scenario": "Silent degradation"
+    },
+    {
+      "id": "a2_x108",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Tell me about learning a new technique quickly for a project.",
+      "scenario": "Fast learning"
+    },
+    {
+      "id": "a2_x109",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Describe a disagreement about model approach and how you resolved it.",
+      "scenario": "Technical disagreement"
+    },
+    {
+      "id": "a2_x110",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Tell me about presenting model results to leadership.",
+      "scenario": "Presenting results"
+    },
+    {
+      "id": "a2_x111",
+      "role": "ai_ml",
+      "round": 2,
+      "text": "Describe mentoring someone on ML best practices.",
+      "scenario": "Mentoring"
+    },
+    {
+      "id": "a3_x100",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How would you handle an imbalanced classification dataset?",
+      "scenario": "Class imbalance"
+    },
+    {
+      "id": "a3_x101",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Explain how you'd prevent overfitting in a deep model.",
+      "scenario": "Overfitting"
+    },
+    {
+      "id": "a3_x102",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Walk me through choosing features for a new model.",
+      "scenario": "Feature selection"
+    },
+    {
+      "id": "a3_x103",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How would you monitor a model for drift after deployment?",
+      "scenario": "Model monitoring"
+    },
+    {
+      "id": "a3_x104",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Explain precision vs recall and when you'd optimize each.",
+      "scenario": "Precision vs recall"
+    },
+    {
+      "id": "a3_x105",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How would you design an A/B test to validate a new model?",
+      "scenario": "Model A/B test"
+    },
+    {
+      "id": "a3_x106",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Walk me through debugging a model with great offline but poor online metrics.",
+      "scenario": "Offline vs online"
+    },
+    {
+      "id": "a3_x107",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How would you approach fine-tuning versus prompting an LLM?",
+      "scenario": "Fine-tune vs prompt"
+    },
+    {
+      "id": "a3_x108",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Explain how you'd build a retrieval-augmented generation pipeline.",
+      "scenario": "RAG design"
+    },
+    {
+      "id": "a3_x109",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How do you evaluate a generative model's output quality?",
+      "scenario": "Gen eval"
+    },
+    {
+      "id": "a3_x110",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "Walk me through reducing inference cost without hurting accuracy much.",
+      "scenario": "Cost reduction"
+    },
+    {
+      "id": "a3_x111",
+      "role": "ai_ml",
+      "round": 3,
+      "text": "How would you set up a training pipeline to be reproducible?",
+      "scenario": "Reproducibility"
+    }
+  ]
+}
